@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Box, Typography, TextField, Button, Snackbar, Alert, CircularProgress, Tooltip, IconButton } from '@mui/material';
+import { useState, useRef } from 'react';
+import { Box, Typography, TextField, Button, Snackbar, Alert, CircularProgress, Tooltip, IconButton, InputAdornment } from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import EmailIcon from '@mui/icons-material/Email';
@@ -7,6 +8,7 @@ import SendIcon from '@mui/icons-material/Send';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import emailjs from '@emailjs/browser';
+import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
 
 const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
@@ -80,6 +82,16 @@ export default function Contact() {
     open: false, type: 'success', msg: '',
   });
   const [copiedLabel, setCopiedLabel] = useState<string | null>(null);
+  const [formHighlighted, setFormHighlighted] = useState(false);
+  const formRef = useRef<HTMLElement>(null);
+  const { ref: sectionRef, visible } = useScrollReveal();
+
+  const handleEmailClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setFormHighlighted(true);
+    setTimeout(() => setFormHighlighted(false), 2000);
+  };
 
   const handleCopy = (label: string, value: string, e: React.MouseEvent) => {
     e.preventDefault();
@@ -125,6 +137,7 @@ export default function Contact() {
       }}
     >
       <Box
+        ref={sectionRef}
         sx={{
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' },
@@ -133,22 +146,27 @@ export default function Contact() {
         }}
       >
         <Box
+          ref={formRef}
           component="form"
           onSubmit={handleSubmit}
           sx={{
             px: { xs: 4, sm: 6, md: 8, lg: 12 },
             py: { xs: 10, lg: 14 },
             borderRight: { lg: '1px solid rgba(201,168,76,0.08)' },
+            outline: formHighlighted ? '1px solid rgba(201,168,76,0.5)' : '1px solid transparent',
+            boxShadow: formHighlighted ? '0 0 40px rgba(201,168,76,0.1)' : 'none',
+            transition: 'outline 0.4s ease, box-shadow 0.4s ease',
+            borderRadius: 1,
           }}
         >
           <Typography
             sx={{
+              ...revealSx(visible, 0),
               color: 'primary.main',
               fontSize: '0.65rem',
               letterSpacing: '0.35em',
               mb: 3,
               fontFamily: '"Inter", sans-serif',
-              opacity: 0.85,
             }}
           >
             CONTATO
@@ -156,7 +174,7 @@ export default function Contact() {
 
           <Typography
             variant="h2"
-            sx={{ fontSize: { xs: '2rem', md: '2.6rem' }, color: '#EBEBEB', mb: 2, lineHeight: 1.2 }}
+            sx={{ ...revealSx(visible, 100), fontSize: { xs: '2rem', md: '2.6rem' }, color: '#EBEBEB', mb: 2, lineHeight: 1.2 }}
           >
             Fale com o<br />
             <Box component="span" sx={{ color: 'primary.main' }}>Canal</Box>
@@ -164,13 +182,13 @@ export default function Contact() {
 
           <Typography
             variant="body2"
-            sx={{ color: 'text.secondary', mb: 5, lineHeight: 1.8, maxWidth: 380 }}
+            sx={{ ...revealSx(visible, 200), color: 'text.secondary', mb: 5, lineHeight: 1.8, maxWidth: 380 }}
           >
             Tem uma dúvida, sugestão de pauta ou quer falar sobre relojoaria? Preencha o formulário
             e enviaremos sua mensagem diretamente.
           </Typography>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mb: 3 }}>
+          <Box sx={{ ...revealSx(visible, 320), display: 'flex', flexDirection: 'column', gap: 2.5, mb: 3 }}>
             <TextField
               label="Nome"
               variant="outlined"
@@ -180,6 +198,17 @@ export default function Contact() {
               error={!!errors.nome}
               helperText={errors.nome}
               sx={inputSx(!!errors.nome)}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end" sx={{ visibility: nome ? 'visible' : 'hidden' }}>
+                      <IconButton size="small" onClick={() => { setNome(''); setErrors((p) => ({ ...p, nome: undefined })); }}>
+                        <ClearIcon sx={{ fontSize: '1rem', color: 'text.secondary' }} />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
             />
             <TextField
               label="Seu e-mail"
@@ -191,6 +220,17 @@ export default function Contact() {
               error={!!errors.email}
               helperText={errors.email}
               sx={inputSx(!!errors.email)}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end" sx={{ visibility: email ? 'visible' : 'hidden' }}>
+                      <IconButton size="small" onClick={() => { setEmail(''); setErrors((p) => ({ ...p, email: undefined })); }}>
+                        <ClearIcon sx={{ fontSize: '1rem', color: 'text.secondary' }} />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
             />
             <TextField
               label="Mensagem"
@@ -203,6 +243,17 @@ export default function Contact() {
               error={!!errors.mensagem}
               helperText={errors.mensagem}
               sx={inputSx(!!errors.mensagem)}
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end" sx={{ visibility: mensagem ? 'visible' : 'hidden', alignSelf: 'flex-start', mt: 1 }}>
+                      <IconButton size="small" onClick={() => { setMensagem(''); setErrors((p) => ({ ...p, mensagem: undefined })); }}>
+                        <ClearIcon sx={{ fontSize: '1rem', color: 'text.secondary' }} />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                },
+              }}
             />
           </Box>
 
@@ -212,7 +263,7 @@ export default function Contact() {
             size="large"
             disabled={loading}
             endIcon={loading ? <CircularProgress size={14} color="inherit" /> : <SendIcon sx={{ fontSize: '1rem !important' }} />}
-            sx={{ fontSize: '0.75rem', letterSpacing: '0.12em' }}
+            sx={{ ...revealSx(visible, 460), fontSize: '0.75rem', letterSpacing: '0.12em' }}
           >
             {loading ? 'Enviando...' : 'Enviar Mensagem'}
           </Button>
@@ -235,13 +286,14 @@ export default function Contact() {
             alt=""
             aria-hidden
             sx={{
+              ...revealSx(visible, 80),
               position: 'absolute',
               inset: 0,
               width: '100%',
               height: '100%',
               objectFit: 'cover',
               objectPosition: 'center',
-              opacity: 0.18,
+              opacity: visible ? 0.18 : 0,
               filter: 'grayscale(40%)',
               pointerEvents: 'none',
             }}
@@ -250,12 +302,12 @@ export default function Contact() {
           <Box sx={{ position: 'relative', zIndex: 1 }}>
             <Typography
               sx={{
+                ...revealSx(visible, 150),
                 color: 'primary.main',
                 fontSize: '0.65rem',
                 letterSpacing: '0.35em',
                 mb: 3,
                 fontFamily: '"Inter", sans-serif',
-                opacity: 0.85,
               }}
             >
               REDES SOCIAIS
@@ -263,7 +315,7 @@ export default function Contact() {
 
             <Typography
               variant="h4"
-              sx={{ color: '#EBEBEB', fontSize: { xs: '1.5rem', md: '1.8rem' }, mb: 6 }}
+              sx={{ ...revealSx(visible, 250), color: '#EBEBEB', fontSize: { xs: '1.5rem', md: '1.8rem' }, mb: 6 }}
             >
               Nos acompanhe
             </Typography>
@@ -272,17 +324,22 @@ export default function Contact() {
               {socials.map((s, i) => (
                 <Box
                   key={s.label}
+                  sx={{
+                    ...revealSx(visible, 360 + i * 120),
+                    borderBottom: i < socials.length - 1 ? '1px solid rgba(201,168,76,0.08)' : 'none',
+                  }}
+                >
+                <Box
                   component="a"
                   href={s.href}
-                  target="_blank"
+                  target={s.href.startsWith('mailto:') ? undefined : '_blank'}
                   rel="noopener noreferrer"
+                  onClick={s.href.startsWith('mailto:') ? handleEmailClick : undefined}
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: 3,
                     py: 3,
-                    borderBottom:
-                      i < socials.length - 1 ? '1px solid rgba(201,168,76,0.08)' : 'none',
                     textDecoration: 'none',
                     transition: 'all 0.2s',
                     color: 'text.secondary',
@@ -355,6 +412,7 @@ export default function Contact() {
                         : <ContentCopyIcon sx={{ fontSize: '1rem' }} />}
                     </IconButton>
                   </Tooltip>
+                </Box>
                 </Box>
               ))}
             </Box>

@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
 
 const pillars = [
   {
@@ -22,9 +23,12 @@ const pillars = [
 ];
 
 export default function About() {
+  const { ref, visible } = useScrollReveal();
+
   return (
     <Box id="about" sx={{ backgroundColor: '#0D0E11', overflow: 'hidden' }}>
       <Box
+        ref={ref}
         sx={{
           display: 'grid',
           gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' },
@@ -43,6 +47,7 @@ export default function About() {
             src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=900&q=85&auto=format&fit=crop"
             alt="Mecanismo de relógio"
             sx={{
+              ...revealSx(visible, 0),
               position: { xs: 'relative', lg: 'absolute' },
               width: '100%',
               height: { xs: 300, md: 420, lg: '100%' },
@@ -86,12 +91,12 @@ export default function About() {
         >
           <Typography
             sx={{
+              ...revealSx(visible, 120),
               color: 'primary.main',
               fontSize: '0.65rem',
               letterSpacing: '0.35em',
               mb: 3,
               fontFamily: '"Inter", sans-serif',
-              opacity: 0.85,
             }}
           >
             SOBRE O CANAL
@@ -100,6 +105,7 @@ export default function About() {
           <Typography
             variant="h2"
             sx={{
+              ...revealSx(visible, 220),
               fontSize: { xs: '2rem', md: '2.6rem' },
               lineHeight: 1.2,
               mb: 3,
@@ -113,6 +119,7 @@ export default function About() {
           <Typography
             variant="body1"
             sx={{
+              ...revealSx(visible, 340),
               color: 'text.secondary',
               lineHeight: 1.9,
               mb: 6,
@@ -129,8 +136,8 @@ export default function About() {
           </Typography>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-            {pillars.map((p) => (
-              <Box key={p.number} sx={{ display: 'flex', gap: 3, alignItems: 'flex-start' }}>
+            {pillars.map((p, i) => (
+              <Box key={p.number} sx={{ ...revealSx(visible, 460 + i * 120), display: 'flex', gap: 3, alignItems: 'flex-start' }}>
                 <Typography
                   sx={{
                     color: 'primary.main',

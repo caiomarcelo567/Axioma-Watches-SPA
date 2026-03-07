@@ -1,8 +1,11 @@
 import { Box } from '@mui/material';
+import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
 
 const FEATURED_VIDEO_ID = 'cSwWaiP2ReQ';
 
 export default function Videos() {
+  const { ref, visible } = useScrollReveal();
+
   return (
     <Box
       id="videos"
@@ -13,7 +16,7 @@ export default function Videos() {
         borderTop: '1px solid rgba(201,168,76,0.08)',
       }}
     >
-      <Box sx={{ maxWidth: 1200, mx: 'auto' }}>
+      <Box ref={ref} sx={{ maxWidth: 1200, mx: 'auto', ...revealSx(visible) }}>
         <Box
           sx={{
             position: 'relative',
