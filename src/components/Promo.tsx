@@ -1,0 +1,150 @@
+import { Box, Typography } from '@mui/material';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import InstagramIcon from '@mui/icons-material/Instagram';
+
+const services = [
+  {
+    icon: <InstagramIcon sx={{ fontSize: '1.6rem', color: '#E1306C' }} />,
+    platform: 'Instagram',
+    title: 'Divulgação e Parceria',
+    description:
+      'Alcance um público apaixonado por relojoaria. O canal realiza divulgações no Instagram para marcas, lojas e lançamentos do segmento, com taxa negociável conforme o projeto.',
+    color: '#E1306C',
+    buttonLabel: 'Fale no Instagram',
+    href: 'https://www.instagram.com/axiomawatcheschannel',
+  },
+  {
+    icon: <YouTubeIcon sx={{ fontSize: '1.6rem', color: '#FF0000' }} />,
+    platform: 'YouTube',
+    title: 'Reviews e Conteúdo',
+    description:
+      'Reviews detalhados, comparativos e apresentações de produtos no canal do YouTube. Conteúdo honesto e informativo para entusiastas e colecionadores. Taxa negociável.',
+    color: '#FF0000',
+    buttonLabel: 'Conheça o Canal',
+    href: 'https://www.youtube.com/@axiomawatches',
+  },
+];
+
+export default function Promo() {
+  return (
+    <Box
+      id="divulgacao"
+      sx={{
+        backgroundColor: '#0D0E11',
+        borderTop: '1px solid rgba(201,168,76,0.08)',
+      }}
+    >
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', md: '1fr 1fr' },
+          maxWidth: 1200,
+          mx: 'auto',
+        }}
+      >
+        {services.map((s, i) => (
+          <Box
+            key={s.platform}
+            sx={{
+              px: { xs: 5, sm: 7, md: 8, lg: 12 },
+              py: { xs: 10, md: 14 },
+              borderRight: i === 0 ? { md: '1px solid rgba(201,168,76,0.08)' } : 'none',
+              position: 'relative',
+              overflow: 'hidden',
+              '&::before': {
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '2px',
+                background: `linear-gradient(to right, transparent, ${s.color}55, transparent)`,
+              },
+            }}
+          >
+            <Box
+              sx={{
+                width: 48,
+                height: 48,
+                borderRadius: '50%',
+                border: `1px solid ${s.color}40`,
+                backgroundColor: `${s.color}0D`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mb: 4,
+              }}
+            >
+              {s.icon}
+            </Box>
+
+            <Typography
+              sx={{
+                color: 'primary.main',
+                fontSize: '0.62rem',
+                letterSpacing: '0.35em',
+                mb: 2,
+                fontFamily: '"Inter", sans-serif',
+                opacity: 0.8,
+              }}
+            >
+              {s.platform.toUpperCase()}
+            </Typography>
+
+            <Typography
+              variant="h4"
+              sx={{
+                fontSize: { xs: '1.5rem', md: '1.8rem' },
+                color: '#EBEBEB',
+                mb: 3,
+                lineHeight: 1.25,
+              }}
+            >
+              {s.title}
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                color: 'text.secondary',
+                lineHeight: 1.9,
+                fontSize: '0.95rem',
+                maxWidth: 400,
+                mb: 5,
+              }}
+            >
+              {s.description}
+            </Typography>
+
+            <Box
+              component="a"
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 1,
+                color: 'primary.main',
+                textDecoration: 'none',
+                fontSize: '0.72rem',
+                letterSpacing: '0.18em',
+                fontFamily: '"Inter", sans-serif',
+                fontWeight: 500,
+                borderBottom: '1px solid rgba(201,168,76,0.3)',
+                pb: 0.5,
+                transition: 'border-color 0.2s, opacity 0.2s',
+                '&:hover': {
+                  borderColor: 'primary.main',
+                  opacity: 0.8,
+                },
+              }}
+            >
+              {s.buttonLabel.toUpperCase()}
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
+}

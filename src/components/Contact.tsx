@@ -1,0 +1,381 @@
+import { useState } from 'react';
+import { Box, Typography, TextField, Button, Snackbar, Alert, CircularProgress, Tooltip, IconButton } from '@mui/material';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import EmailIcon from '@mui/icons-material/Email';
+import SendIcon from '@mui/icons-material/Send';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CheckIcon from '@mui/icons-material/Check';
+import emailjs from '@emailjs/browser';
+
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string;
+
+const socials = [
+  {
+    icon: <YouTubeIcon sx={{ fontSize: '1.2rem' }} />,
+    label: 'YouTube',
+    handle: '@axiomawatches',
+    href: 'https://www.youtube.com/@axiomawatches',
+    color: '#FF0000',
+  },
+  {
+    icon: <InstagramIcon sx={{ fontSize: '1.2rem' }} />,
+    label: 'Instagram',
+    handle: '@axiomawatcheschannel',
+    href: 'https://www.instagram.com/axiomawatcheschannel',
+    color: '#E1306C',
+  },
+  {
+    icon: <EmailIcon sx={{ fontSize: '1.2rem' }} />,
+    label: 'E-mail direto',
+    handle: 'cmvaz2010@gmail.com',
+    href: 'mailto:cmvaz2010@gmail.com',
+    color: '#C9A84C',
+  },
+];
+
+function inputSx(hasError: boolean) {
+  return {
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: 'rgba(255,255,255,0.03)',
+      borderRadius: 1,
+      '& fieldset': { borderColor: hasError ? 'error.main' : 'rgba(201,168,76,0.2)' },
+      '&:hover fieldset': { borderColor: hasError ? 'error.main' : 'rgba(201,168,76,0.4)' },
+      '&.Mui-focused fieldset': { borderColor: hasError ? 'error.main' : 'primary.main', borderWidth: 1 },
+    },
+    '& .MuiInputLabel-root': { color: hasError ? 'error.main' : 'text.secondary', fontSize: '0.875rem' },
+    '& .MuiInputLabel-root.Mui-focused': { color: hasError ? 'error.main' : 'primary.main' },
+    '& .MuiOutlinedInput-input': { color: 'text.primary', fontSize: '0.9rem' },
+    '& .MuiFormHelperText-root': { fontSize: '0.75rem', mt: 0.5 },
+  };
+}
+
+interface FormErrors {
+  nome?: string;
+  email?: string;
+  mensagem?: string;
+}
+
+function validate(nome: string, email: string, mensagem: string): FormErrors {
+  const errors: FormErrors = {};
+  if (!nome.trim()) errors.nome = 'Por favor, informe seu nome.';
+  if (!email.trim()) {
+    errors.email = 'Por favor, informe seu e-mail.';
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = 'Informe um e-mail válido.';
+  }
+  if (!mensagem.trim()) errors.mensagem = 'Por favor, escreva sua mensagem.';
+  return errors;
+}
+
+export default function Contact() {
+  const [nome, setNome] = useState('');
+  const [email, setEmail] = useState('');
+  const [mensagem, setMensagem] = useState('');
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [loading, setLoading] = useState(false);
+  const [snackbar, setSnackbar] = useState<{ open: boolean; type: 'success' | 'error'; msg: string }>({
+    open: false, type: 'success', msg: '',
+  });
+  const [copiedLabel, setCopiedLabel] = useState<string | null>(null);
+
+  const handleCopy = (label: string, value: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText(value);
+    setCopiedLabel(label);
+    setTimeout(() => setCopiedLabel(null), 2000);
+  };
+
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    const validationErrors = validate(nome, email, mensagem);
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+    setLoading(true);
+    try {
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        { from_name: nome, from_email: email, message: mensagem },
+        EMAILJS_PUBLIC_KEY,
+      );
+      setSnackbar({ open: true, type: 'success', msg: 'Mensagem enviada com sucesso!' });
+      setNome('');
+      setEmail('');
+      setMensagem('');
+    } catch {
+      setSnackbar({ open: true, type: 'error', msg: 'Erro ao enviar. Tente novamente ou use o e-mail direto.' });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Box
+      id="contact"
+      sx={{
+        backgroundColor: '#0D0E11',
+        borderTop: '1px solid rgba(201,168,76,0.08)',
+      }}
+    >
+      <Box
+        sx={{
+          display: 'grid',
+          gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' },
+          maxWidth: 1200,
+          mx: 'auto',
+        }}
+      >
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            px: { xs: 4, sm: 6, md: 8, lg: 12 },
+            py: { xs: 10, lg: 14 },
+            borderRight: { lg: '1px solid rgba(201,168,76,0.08)' },
+          }}
+        >
+          <Typography
+            sx={{
+              color: 'primary.main',
+              fontSize: '0.65rem',
+              letterSpacing: '0.35em',
+              mb: 3,
+              fontFamily: '"Inter", sans-serif',
+              opacity: 0.85,
+            }}
+          >
+            CONTATO
+          </Typography>
+
+          <Typography
+            variant="h2"
+            sx={{ fontSize: { xs: '2rem', md: '2.6rem' }, color: '#EBEBEB', mb: 2, lineHeight: 1.2 }}
+          >
+            Fale com o<br />
+            <Box component="span" sx={{ color: 'primary.main' }}>Canal</Box>
+          </Typography>
+
+          <Typography
+            variant="body2"
+            sx={{ color: 'text.secondary', mb: 5, lineHeight: 1.8, maxWidth: 380 }}
+          >
+            Tem uma dúvida, sugestão de pauta ou quer falar sobre relojoaria? Preencha o formulário
+            e enviaremos sua mensagem diretamente.
+          </Typography>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2.5, mb: 3 }}>
+            <TextField
+              label="Nome"
+              variant="outlined"
+              fullWidth
+              value={nome}
+              onChange={(e) => { setNome(e.target.value); setErrors((prev) => ({ ...prev, nome: undefined })); }}
+              error={!!errors.nome}
+              helperText={errors.nome}
+              sx={inputSx(!!errors.nome)}
+            />
+            <TextField
+              label="Seu e-mail"
+              variant="outlined"
+              type="email"
+              fullWidth
+              value={email}
+              onChange={(e) => { setEmail(e.target.value); setErrors((prev) => ({ ...prev, email: undefined })); }}
+              error={!!errors.email}
+              helperText={errors.email}
+              sx={inputSx(!!errors.email)}
+            />
+            <TextField
+              label="Mensagem"
+              variant="outlined"
+              fullWidth
+              multiline
+              rows={5}
+              value={mensagem}
+              onChange={(e) => { setMensagem(e.target.value); setErrors((prev) => ({ ...prev, mensagem: undefined })); }}
+              error={!!errors.mensagem}
+              helperText={errors.mensagem}
+              sx={inputSx(!!errors.mensagem)}
+            />
+          </Box>
+
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            disabled={loading}
+            endIcon={loading ? <CircularProgress size={14} color="inherit" /> : <SendIcon sx={{ fontSize: '1rem !important' }} />}
+            sx={{ fontSize: '0.75rem', letterSpacing: '0.12em' }}
+          >
+            {loading ? 'Enviando...' : 'Enviar Mensagem'}
+          </Button>
+        </Box>
+
+        <Box
+          sx={{
+            px: { xs: 4, sm: 6, md: 8, lg: 10 },
+            py: { xs: 8, lg: 14 },
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          <Box
+            component="img"
+            src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=700&q=70&auto=format&fit=crop"
+            alt=""
+            aria-hidden
+            sx={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              opacity: 0.18,
+              filter: 'grayscale(40%)',
+              pointerEvents: 'none',
+            }}
+          />
+
+          <Box sx={{ position: 'relative', zIndex: 1 }}>
+            <Typography
+              sx={{
+                color: 'primary.main',
+                fontSize: '0.65rem',
+                letterSpacing: '0.35em',
+                mb: 3,
+                fontFamily: '"Inter", sans-serif',
+                opacity: 0.85,
+              }}
+            >
+              REDES SOCIAIS
+            </Typography>
+
+            <Typography
+              variant="h4"
+              sx={{ color: '#EBEBEB', fontSize: { xs: '1.5rem', md: '1.8rem' }, mb: 6 }}
+            >
+              Nos acompanhe
+            </Typography>
+
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {socials.map((s, i) => (
+                <Box
+                  key={s.label}
+                  component="a"
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 3,
+                    py: 3,
+                    borderBottom:
+                      i < socials.length - 1 ? '1px solid rgba(201,168,76,0.08)' : 'none',
+                    textDecoration: 'none',
+                    transition: 'all 0.2s',
+                    color: 'text.secondary',
+                    position: 'relative',
+                    '&:hover': { color: s.color, pl: 1 },
+                    '&:hover .copy-btn': { opacity: 1 },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: '50%',
+                      border: '1px solid rgba(255,255,255,0.07)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'inherit',
+                      flexShrink: 0,
+                      transition: 'border-color 0.2s, background 0.2s',
+                      'a:hover &': {
+                        borderColor: s.color + '60',
+                        backgroundColor: s.color + '12',
+                      },
+                    }}
+                  >
+                    {s.icon}
+                  </Box>
+                  <Box sx={{ flex: 1 }}>
+                    <Typography
+                      sx={{
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        color: '#C0C0C0',
+                        letterSpacing: '0.06em',
+                        lineHeight: 1.2,
+                        fontFamily: '"Inter", sans-serif',
+                      }}
+                    >
+                      {s.label}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: '0.78rem',
+                        color: 'inherit',
+                        letterSpacing: '0.02em',
+                        mt: 0.3,
+                        fontFamily: '"Inter", sans-serif',
+                        wordBreak: 'break-all',
+                      }}
+                    >
+                      {s.handle}
+                    </Typography>
+                  </Box>
+                  <Tooltip title={copiedLabel === s.label ? 'Copiado!' : 'Copiar'} placement="left">
+                    <IconButton
+                      className="copy-btn"
+                      onClick={(e) => handleCopy(s.label, s.handle, e)}
+                      size="small"
+                      sx={{
+                        opacity: 0,
+                        transition: 'opacity 0.2s',
+                        color: copiedLabel === s.label ? 'success.main' : 'text.secondary',
+                        flexShrink: 0,
+                        '&:hover': { color: s.color, backgroundColor: s.color + '15' },
+                      }}
+                    >
+                      {copiedLabel === s.label
+                        ? <CheckIcon sx={{ fontSize: '1rem' }} />
+                        : <ContentCopyIcon sx={{ fontSize: '1rem' }} />}
+                    </IconButton>
+                  </Tooltip>
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={5000}
+        onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert
+          severity={snackbar.type}
+          onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
+          sx={{ fontSize: '0.85rem' }}
+        >
+          {snackbar.msg}
+        </Alert>
+      </Snackbar>
+    </Box>
+  );
+}
