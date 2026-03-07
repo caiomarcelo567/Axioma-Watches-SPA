@@ -1,48 +1,49 @@
 # Axioma Watches
 
-Site oficial do canal **Axioma Watches**, de **Claudio Vaz** — canal voltado para a relojoaria quartz e mecânica automática.
+Official website for the **Axioma Watches** YouTube channel, created by **Claudio Vaz** — a channel focused on quartz and automatic mechanical watchmaking.
 
-Este projeto foi desenvolvido por mim para o meu pai, Claudio Vaz, criador do canal. Trata-se de uma SPA (Single Page Application), um único arquivo HTML que carrega toda a aplicação no navegador, sem recarregamento de página ao navegar entre as seções.
+This project was developed by me for my father, Claudio Vaz, the creator of the channel. It is a SPA (Single Page Application), meaning a single HTML page loads the entire application in the browser without reloading when navigating between sections.
 
-**Links do canal:**
+**Channel links:**
 
-- YouTube: https://www.youtube.com/@axiomawatches
-- Instagram: https://www.instagram.com/axiomawatcheschannel
-- E-mail: cmvaz2010@gmail.com
-- Meu e-mai: caiomarcelo567@hotmail.com
----
-
-## Tecnologias
-
-- [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- [Vite 7](https://vite.dev/)
-- [Material UI v7](https://mui.com/)
-- [EmailJS](https://www.emailjs.com/) — envio de e-mail direto do frontend, sem backend
-- Fontes: Playfair Display + Inter (Google Fonts)
+* YouTube: https://www.youtube.com/@axiomawatches
+* Instagram: https://www.instagram.com/axiomawatcheschannel
+* Email: [cmvaz2010@gmail.com](mailto:cmvaz2010@gmail.com)
+* My email: [caiomarcelo567@hotmail.com](mailto:caiomarcelo567@hotmail.com)
 
 ---
 
-## Rodando localmente
+## Technologies
 
-Pré-requisitos: [Node.js](https://nodejs.org/) 18 ou superior.
+* [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+* [Vite 7](https://vite.dev/)
+* [Material UI v7](https://mui.com/)
+* [EmailJS](https://www.emailjs.com/) — send emails directly from the frontend without a backend
+* Fonts: Playfair Display + Inter (Google Fonts)
+
+---
+
+## Running locally
+
+Prerequisites: [Node.js](https://nodejs.org/) 18 or higher.
 
 ```bash
-# Instale as dependências (apenas na primeira vez)
+# Install dependencies (only the first time)
 npm install
 
-# Inicie o servidor de desenvolvimento
+# Start the development server
 npm start
 ```
 
-Acesse **http://localhost:5173** no navegador.
+Open **http://localhost:5173** in your browser.
 
 ---
 
-## Variáveis de ambiente (opcional)
+## Environment variables (optional)
 
-O formulário de contato usa EmailJS para enviar mensagens. Esta etapa é opcional — o site funciona normalmente sem ela, mas o formulário só enviará e-mails de verdade após a configuração.
+The contact form uses EmailJS to send messages. This step is optional — the website works normally without it, but the form will only send real emails after configuration.
 
-Crie um arquivo chamado `.env` na raiz do projeto com o seguinte conteúdo:
+Create a `.env` file in the project root with the following content:
 
 ```env
 VITE_EMAILJS_SERVICE_ID=service_xxxxxxx
@@ -50,28 +51,28 @@ VITE_EMAILJS_TEMPLATE_ID=template_xxxxxxx
 VITE_EMAILJS_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxx
 ```
 
-### Como obter as credenciais do EmailJS
+### How to get EmailJS credentials
 
-1. Crie uma conta gratuita em [emailjs.com](https://www.emailjs.com) (200 e-mails/mês no plano gratuito)
-2. Em **Email Services**, conecte seu Gmail ou outro provedor
-3. Em **Email Templates**, crie um template com as variáveis abaixo no corpo do e-mail:
+1. Create a free account at https://www.emailjs.com (200 emails/month on the free plan)
+2. In **Email Services**, connect your Gmail or another provider
+3. In **Email Templates**, create a template with the following variables in the email body:
 
 ```
-Nome: {{from_name}}
-E-mail: {{from_email}}
+Name: {{from_name}}
+Email: {{from_email}}
 
 {{message}}
 ```
 
-4. Copie o **Service ID**, **Template ID** e **Public Key** (em Account > General) para o `.env`
+4. Copy the **Service ID**, **Template ID**, and **Public Key** (Account → General) into the `.env` file.
 
 ---
 
-## Personalizações
+## Customization
 
-### Adicionar a logo
+### Adding the logo
 
-No arquivo `src/components/Hero.tsx`, localize o bloco do placeholder de logo e substitua pelo seu `<img>`:
+In `src/components/Hero.tsx`, locate the logo placeholder block and replace it with your `<img>`:
 
 ```tsx
 <Box sx={{ mb: 4 }}>
@@ -79,29 +80,31 @@ No arquivo `src/components/Hero.tsx`, localize o bloco do placeholder de logo e 
 </Box>
 ```
 
-Coloque o arquivo da logo dentro da pasta `public/`.
+Place the logo file inside the `public/` folder.
 
-### Atualizar o vídeo em destaque
+### Updating the featured video
 
-No arquivo `src/components/Videos.tsx`, edite a constante no topo:
+In `src/components/Videos.tsx`, edit the constant at the top:
 
 ```ts
 const FEATURED_VIDEO_ID = 'abc123XYZ';
 ```
 
-O ID é a parte após `?v=` na URL do YouTube. Por exemplo, em `https://www.youtube.com/watch?v=abc123XYZ`, o ID é `abc123XYZ`.
+The ID is the part after `?v=` in the YouTube URL.
+For example, in `https://www.youtube.com/watch?v=abc123XYZ`, the ID is `abc123XYZ`.
 
 ---
 
 ## Build
 
 ```bash
-# Gera os arquivos estáticos na pasta dist/
+# Generate static files in the dist/ folder
 npm run build
 
-# Testa a build localmente antes de subir
+# Test the build locally before deploying
 npm run preview
 ```
+
 ---
 
-Desenvolvido por **Caio Vaz** — Desenvolvedor Front End Junior.
+Developed by **Caio Vaz** — Junior Front-End Developer.
