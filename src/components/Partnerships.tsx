@@ -12,7 +12,7 @@ const partnerships = [
   {
     image: impalaImg,
     brand: 'Relojoaria Impala',
-    description: 'Review do Seiko PADI Turtle em parceria com a Impala — o relógio de mergulho ícone da Seiko em destaque no canal.',
+    description: 'Review completo do relógio SPINNAKER modelo SP-5068-03 HULL — Uma marca Inglesa que produz modelos inspirados em elementos marinhos e náuticos.',
     videoId: 'Zhbrgj9DH_4',
     videoUrl: 'https://youtu.be/Zhbrgj9DH_4',
     websiteUrl: 'https://www.relojoariaimpala.com.br/',
@@ -23,7 +23,7 @@ const partnerships = [
   {
     image: terranovaImg,
     brand: 'Terranova Watches',
-    description: 'Conteúdo especial em parceria com a Terranova Watches — referência em relojoaria nacional com curadoria de peças selecionadas.',
+    description: 'Conteúdo especial em parceria com a Terranova Watches — Uma Micro Brand que despontou no cenário nacional em 2024 e vem conquistando o coração dos amantes da boa relojoaria.',
     videoId: 'BWQ7Jckc_ok',
     videoUrl: 'https://youtu.be/BWQ7Jckc_ok',
     websiteUrl: 'https://terranovawatches.com/',
