@@ -299,7 +299,6 @@ export default function Contact() {
             }}
           />
 
-          {/* fade edges */}
           <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #0D0E11 0%, transparent 18%, transparent 82%, #0D0E11 100%)', pointerEvents: 'none', zIndex: 0 }} />
           <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #0D0E11 0%, transparent 15%, transparent 85%, #0D0E11 100%)', pointerEvents: 'none', zIndex: 0 }} />
 
