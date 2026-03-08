@@ -24,7 +24,7 @@ export default function Partnerships() {
       videoUrl: 'https://youtu.be/Zhbrgj9DH_4',
       websiteUrl: 'https://www.relojoariaimpala.com.br/',
       coupon: 'axioma',
-      imageFit: 'cover' as const,
+      imageFit: 'contain' as const,
       imageBg: '#000',
     },
     {
