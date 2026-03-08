@@ -1,5 +1,6 @@
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import theme from './theme';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -27,6 +28,7 @@ export default function App() {
         <Footer />
         <BackToTop />
         <Analytics />
+        <SpeedInsights />
       </Box>
     </ThemeProvider>
   );
