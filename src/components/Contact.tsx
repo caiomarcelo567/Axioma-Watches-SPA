@@ -9,34 +9,11 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CheckIcon from '@mui/icons-material/Check';
 import emailjs from '@emailjs/browser';
 import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  as string;
 const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string;
 const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  as string;
-
-const socials = [
-  {
-    icon: <YouTubeIcon sx={{ fontSize: '1.2rem' }} />,
-    label: 'YouTube',
-    handle: '@axiomawatches',
-    href: 'https://www.youtube.com/@axiomawatches',
-    color: '#FF0000',
-  },
-  {
-    icon: <InstagramIcon sx={{ fontSize: '1.2rem' }} />,
-    label: 'Instagram',
-    handle: '@axiomawatcheschannel',
-    href: 'https://www.instagram.com/axiomawatcheschannel',
-    color: '#E1306C',
-  },
-  {
-    icon: <EmailIcon sx={{ fontSize: '1.2rem' }} />,
-    label: 'E-mail direto',
-    handle: 'cmvaz2010@gmail.com',
-    href: 'mailto:cmvaz2010@gmail.com',
-    color: '#C9A84C',
-  },
-];
 
 function inputSx(hasError: boolean) {
   return {
@@ -60,19 +37,8 @@ interface FormErrors {
   mensagem?: string;
 }
 
-function validate(nome: string, email: string, mensagem: string): FormErrors {
-  const errors: FormErrors = {};
-  if (!nome.trim()) errors.nome = 'Por favor, informe seu nome.';
-  if (!email.trim()) {
-    errors.email = 'Por favor, informe seu e-mail.';
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errors.email = 'Informe um e-mail válido.';
-  }
-  if (!mensagem.trim()) errors.mensagem = 'Por favor, escreva sua mensagem.';
-  return errors;
-}
-
 export default function Contact() {
+  const { t } = useLanguage();
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [mensagem, setMensagem] = useState('');
@@ -85,6 +51,24 @@ export default function Contact() {
   const [formHighlighted, setFormHighlighted] = useState(false);
   const formRef = useRef<HTMLElement>(null);
   const { ref: sectionRef, visible } = useScrollReveal();
+
+  const socials = [
+    { icon: <YouTubeIcon sx={{ fontSize: '1.2rem' }} />, label: 'YouTube', handle: '@axiomawatches', href: 'https://www.youtube.com/@axiomawatches', color: '#FF0000' },
+    { icon: <InstagramIcon sx={{ fontSize: '1.2rem' }} />, label: 'Instagram', handle: '@axiomawatcheschannel', href: 'https://www.instagram.com/axiomawatcheschannel', color: '#E1306C' },
+    { icon: <EmailIcon sx={{ fontSize: '1.2rem' }} />, label: t.contact.emailDirectLabel, handle: 'cmvaz2010@gmail.com', href: 'mailto:cmvaz2010@gmail.com', color: '#C9A84C' },
+  ];
+
+  const validate = (n: string, em: string, msg: string): FormErrors => {
+    const errs: FormErrors = {};
+    if (!n.trim()) errs.nome = t.contact.validation.nameRequired;
+    if (!em.trim()) {
+      errs.email = t.contact.validation.emailRequired;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+      errs.email = t.contact.validation.emailInvalid;
+    }
+    if (!msg.trim()) errs.mensagem = t.contact.validation.messageRequired;
+    return errs;
+  };
 
   const handleEmailClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -117,33 +101,22 @@ export default function Contact() {
         { from_name: nome, from_email: email, message: mensagem },
         EMAILJS_PUBLIC_KEY,
       );
-      setSnackbar({ open: true, type: 'success', msg: 'Mensagem enviada com sucesso!' });
+      setSnackbar({ open: true, type: 'success', msg: t.contact.success });
       setNome('');
       setEmail('');
       setMensagem('');
     } catch {
-      setSnackbar({ open: true, type: 'error', msg: 'Erro ao enviar. Tente novamente ou use o e-mail direto.' });
+      setSnackbar({ open: true, type: 'error', msg: t.contact.error });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <Box
-      id="contact"
-      sx={{
-        backgroundColor: '#0D0E11',
-        borderTop: '1px solid rgba(201,168,76,0.08)',
-      }}
-    >
+    <Box id="contact" sx={{ backgroundColor: '#0D0E11', borderTop: '1px solid rgba(201,168,76,0.08)' }}>
       <Box
         ref={sectionRef}
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' },
-          maxWidth: 1200,
-          mx: 'auto',
-        }}
+        sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '1fr 1fr' }, maxWidth: 1200, mx: 'auto' }}
       >
         <Box
           ref={formRef}
@@ -159,38 +132,22 @@ export default function Contact() {
             borderRadius: 1,
           }}
         >
-          <Typography
-            sx={{
-              ...revealSx(visible, 0),
-              color: 'primary.main',
-              fontSize: '0.65rem',
-              letterSpacing: '0.35em',
-              mb: 3,
-              fontFamily: '"Inter", sans-serif',
-            }}
-          >
-            CONTATO
+          <Typography sx={{ ...revealSx(visible, 0), color: 'primary.main', fontSize: '0.65rem', letterSpacing: '0.35em', mb: 3, fontFamily: '"Inter", sans-serif' }}>
+            {t.contact.label}
           </Typography>
 
-          <Typography
-            variant="h2"
-            sx={{ ...revealSx(visible, 100), fontSize: { xs: '2rem', md: '2.6rem' }, color: '#EBEBEB', mb: 2, lineHeight: 1.2 }}
-          >
-            Fale com o<br />
-            <Box component="span" sx={{ color: 'primary.main' }}>Canal</Box>
+          <Typography variant="h2" sx={{ ...revealSx(visible, 100), fontSize: { xs: '2rem', md: '2.6rem' }, color: '#EBEBEB', mb: 2, lineHeight: 1.2 }}>
+            {t.contact.headingLine1}<br />
+            <Box component="span" sx={{ color: 'primary.main' }}>{t.contact.headingHighlighted}</Box>
           </Typography>
 
-          <Typography
-            variant="body2"
-            sx={{ ...revealSx(visible, 200), color: 'text.secondary', mb: 5, lineHeight: 1.8, maxWidth: 380 }}
-          >
-            Tem uma dúvida, sugestão de pauta ou qualquer assunto sobre a boa relojoaria? Preencha o formulário, 
-            envie a mensagem e te responderemos em breve!
+          <Typography variant="body2" sx={{ ...revealSx(visible, 200), color: 'text.secondary', mb: 5, lineHeight: 1.8, maxWidth: 380 }}>
+            {t.contact.body}
           </Typography>
 
           <Box sx={{ ...revealSx(visible, 320), display: 'flex', flexDirection: 'column', gap: 2.5, mb: 3 }}>
             <TextField
-              label="Nome"
+              label={t.contact.namePlaceholder}
               variant="outlined"
               fullWidth
               value={nome}
@@ -211,7 +168,7 @@ export default function Contact() {
               }}
             />
             <TextField
-              label="Seu e-mail"
+              label={t.contact.emailPlaceholder}
               variant="outlined"
               type="email"
               fullWidth
@@ -233,7 +190,7 @@ export default function Contact() {
               }}
             />
             <TextField
-              label="Mensagem"
+              label={t.contact.messagePlaceholder}
               variant="outlined"
               fullWidth
               multiline
@@ -265,21 +222,11 @@ export default function Contact() {
             endIcon={loading ? <CircularProgress size={14} color="inherit" /> : <SendIcon sx={{ fontSize: '1rem !important' }} />}
             sx={{ ...revealSx(visible, 460), fontSize: '0.75rem', letterSpacing: '0.12em' }}
           >
-            {loading ? 'Enviando...' : 'Enviar Mensagem'}
+            {loading ? t.contact.sending : t.contact.send}
           </Button>
         </Box>
 
-        <Box
-          sx={{
-            px: { xs: 4, sm: 6, md: 8, lg: 10 },
-            py: { xs: 8, lg: 14 },
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            position: 'relative',
-            overflow: 'hidden',
-          }}
-        >
+        <Box sx={{ px: { xs: 4, sm: 6, md: 8, lg: 10 }, py: { xs: 8, lg: 14 }, display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', overflow: 'hidden' }}>
           <Box
             component="img"
             src="https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=700&q=70&auto=format&fit=crop"
@@ -287,135 +234,61 @@ export default function Contact() {
             aria-hidden
             sx={{
               ...revealSx(visible, 80),
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              opacity: visible ? 0.18 : 0,
-              filter: 'grayscale(40%)',
-              pointerEvents: 'none',
+              position: 'absolute', inset: 0, width: '100%', height: '100%',
+              objectFit: 'cover', objectPosition: 'center',
+              opacity: visible ? 0.18 : 0, filter: 'grayscale(40%)', pointerEvents: 'none',
             }}
           />
-
           <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #0D0E11 0%, transparent 18%, transparent 82%, #0D0E11 100%)', pointerEvents: 'none', zIndex: 0 }} />
           <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #0D0E11 0%, transparent 15%, transparent 85%, #0D0E11 100%)', pointerEvents: 'none', zIndex: 0 }} />
 
           <Box sx={{ position: 'relative', zIndex: 1 }}>
-            <Typography
-              sx={{
-                ...revealSx(visible, 150),
-                color: 'primary.main',
-                fontSize: '0.65rem',
-                letterSpacing: '0.35em',
-                mb: 3,
-                fontFamily: '"Inter", sans-serif',
-              }}
-            >
-              REDES SOCIAIS
+            <Typography sx={{ ...revealSx(visible, 150), color: 'primary.main', fontSize: '0.65rem', letterSpacing: '0.35em', mb: 3, fontFamily: '"Inter", sans-serif' }}>
+              {t.contact.socialsLabel}
             </Typography>
 
-            <Typography
-              variant="h4"
-              sx={{ ...revealSx(visible, 250), color: '#EBEBEB', fontSize: { xs: '1.5rem', md: '1.8rem' }, mb: 6 }}
-            >
-              Nos acompanhe
+            <Typography variant="h4" sx={{ ...revealSx(visible, 250), color: '#EBEBEB', fontSize: { xs: '1.5rem', md: '1.8rem' }, mb: 6 }}>
+              {t.contact.socialsHeading}
             </Typography>
 
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {socials.map((s, i) => (
-                <Box
-                  key={s.label}
-                  sx={{
-                    ...revealSx(visible, 360 + i * 120),
-                    borderBottom: i < socials.length - 1 ? '1px solid rgba(201,168,76,0.08)' : 'none',
-                  }}
-                >
-                <Box
-                  component="a"
-                  href={s.href}
-                  target={s.href.startsWith('mailto:') ? undefined : '_blank'}
-                  rel="noopener noreferrer"
-                  onClick={s.href.startsWith('mailto:') ? handleEmailClick : undefined}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 3,
-                    py: 3,
-                    textDecoration: 'none',
-                    transition: 'all 0.2s',
-                    color: 'text.secondary',
-                    position: 'relative',
-                    '&:hover': { color: s.color, pl: 1 },
-                    '&:hover .copy-btn': { opacity: 1 },
-                  }}
-                >
+                <Box key={s.label} sx={{ ...revealSx(visible, 360 + i * 120), borderBottom: i < socials.length - 1 ? '1px solid rgba(201,168,76,0.08)' : 'none' }}>
                   <Box
+                    component="a"
+                    href={s.href}
+                    target={s.href.startsWith('mailto:') ? undefined : '_blank'}
+                    rel="noopener noreferrer"
+                    onClick={s.href.startsWith('mailto:') ? handleEmailClick : undefined}
                     sx={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: '50%',
-                      border: '1px solid rgba(255,255,255,0.07)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      color: 'inherit',
-                      flexShrink: 0,
-                      transition: 'border-color 0.2s, background 0.2s',
-                      'a:hover &': {
-                        borderColor: s.color + '60',
-                        backgroundColor: s.color + '12',
-                      },
+                      display: 'flex', alignItems: 'center', gap: 3, py: 3,
+                      textDecoration: 'none', transition: 'all 0.2s', color: 'text.secondary', position: 'relative',
+                      '&:hover': { color: s.color, pl: 1 },
+                      '&:hover .copy-btn': { opacity: 1 },
                     }}
                   >
-                    {s.icon}
+                    <Box sx={{ width: 40, height: 40, borderRadius: '50%', border: '1px solid rgba(255,255,255,0.07)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'inherit', flexShrink: 0, transition: 'border-color 0.2s, background 0.2s', 'a:hover &': { borderColor: s.color + '60', backgroundColor: s.color + '12' } }}>
+                      {s.icon}
+                    </Box>
+                    <Box sx={{ flex: 1 }}>
+                      <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#C0C0C0', letterSpacing: '0.06em', lineHeight: 1.2, fontFamily: '"Inter", sans-serif' }}>
+                        {s.label}
+                      </Typography>
+                      <Typography sx={{ fontSize: '0.78rem', color: 'inherit', letterSpacing: '0.02em', mt: 0.3, fontFamily: '"Inter", sans-serif', wordBreak: 'break-all' }}>
+                        {s.handle}
+                      </Typography>
+                    </Box>
+                    <Tooltip title={copiedLabel === s.label ? t.contact.copiedTooltip : t.contact.copy} placement="left">
+                      <IconButton
+                        className="copy-btn"
+                        onClick={(e) => handleCopy(s.label, s.handle, e)}
+                        size="small"
+                        sx={{ opacity: 0, transition: 'opacity 0.2s', color: copiedLabel === s.label ? 'success.main' : 'text.secondary', flexShrink: 0, '&:hover': { color: s.color, backgroundColor: s.color + '15' } }}
+                      >
+                        {copiedLabel === s.label ? <CheckIcon sx={{ fontSize: '1rem' }} /> : <ContentCopyIcon sx={{ fontSize: '1rem' }} />}
+                      </IconButton>
+                    </Tooltip>
                   </Box>
-                  <Box sx={{ flex: 1 }}>
-                    <Typography
-                      sx={{
-                        fontSize: '0.8rem',
-                        fontWeight: 600,
-                        color: '#C0C0C0',
-                        letterSpacing: '0.06em',
-                        lineHeight: 1.2,
-                        fontFamily: '"Inter", sans-serif',
-                      }}
-                    >
-                      {s.label}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontSize: '0.78rem',
-                        color: 'inherit',
-                        letterSpacing: '0.02em',
-                        mt: 0.3,
-                        fontFamily: '"Inter", sans-serif',
-                        wordBreak: 'break-all',
-                      }}
-                    >
-                      {s.handle}
-                    </Typography>
-                  </Box>
-                  <Tooltip title={copiedLabel === s.label ? 'Copiado!' : 'Copiar'} placement="left">
-                    <IconButton
-                      className="copy-btn"
-                      onClick={(e) => handleCopy(s.label, s.handle, e)}
-                      size="small"
-                      sx={{
-                        opacity: 0,
-                        transition: 'opacity 0.2s',
-                        color: copiedLabel === s.label ? 'success.main' : 'text.secondary',
-                        flexShrink: 0,
-                        '&:hover': { color: s.color, backgroundColor: s.color + '15' },
-                      }}
-                    >
-                      {copiedLabel === s.label
-                        ? <CheckIcon sx={{ fontSize: '1rem' }} />
-                        : <ContentCopyIcon sx={{ fontSize: '1rem' }} />}
-                    </IconButton>
-                  </Tooltip>
-                </Box>
                 </Box>
               ))}
             </Box>
@@ -429,11 +302,7 @@ export default function Contact() {
         onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert
-          severity={snackbar.type}
-          onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))}
-          sx={{ fontSize: '0.85rem' }}
-        >
+        <Alert severity={snackbar.type} onClose={() => setSnackbar((prev) => ({ ...prev, open: false }))} sx={{ fontSize: '0.85rem' }}>
           {snackbar.msg}
         </Alert>
       </Snackbar>

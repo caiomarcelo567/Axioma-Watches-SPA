@@ -2,32 +2,32 @@ import { Box, Typography } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
-
-const services = [
-  {
-    icon: <InstagramIcon sx={{ fontSize: '1.6rem', color: '#E1306C' }} />,
-    platform: 'Instagram',
-    title: 'Divulgação e Parceria',
-    description:
-      'Alcance um público apaixonado pela boa relojoaria. O canal realiza divulgações no Instagram para marcas, lojas e lançamentos relacionados ao segmento com taxa negociável conforme o projeto.',
-    color: '#E1306C',
-    buttonLabel: 'Fale no Instagram',
-    href: 'https://www.instagram.com/axiomawatcheschannel',
-  },
-  {
-    icon: <YouTubeIcon sx={{ fontSize: '1.6rem', color: '#FF0000' }} />,
-    platform: 'YouTube',
-    title: 'Reviews e Conteúdo',
-    description:
-      'Reviews técnicos detalhados, comparativos e apresentações de produtos no canal do YouTube. Conteúdo legítimo e informativo para entusiastas, colecionadores e profissionais da área, taxa negociável.',
-    color: '#FF0000',
-    buttonLabel: 'Conheça o Canal',
-    href: 'https://www.youtube.com/@axiomawatches',
-  },
-];
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Promo() {
   const { ref, visible } = useScrollReveal();
+  const { t } = useLanguage();
+
+  const services = [
+    {
+      icon: <InstagramIcon sx={{ fontSize: '1.6rem', color: '#E1306C' }} />,
+      platform: 'Instagram',
+      title: t.promo.instagram.title,
+      description: t.promo.instagram.description,
+      color: '#E1306C',
+      buttonLabel: t.promo.instagram.button,
+      href: 'https://www.instagram.com/axiomawatcheschannel',
+    },
+    {
+      icon: <YouTubeIcon sx={{ fontSize: '1.6rem', color: '#FF0000' }} />,
+      platform: 'YouTube',
+      title: t.promo.youtube.title,
+      description: t.promo.youtube.description,
+      color: '#FF0000',
+      buttonLabel: t.promo.youtube.button,
+      href: 'https://www.youtube.com/@axiomawatches',
+    },
+  ];
 
   return (
     <Box
@@ -146,10 +146,7 @@ export default function Promo() {
                     borderBottom: '1px solid rgba(201,168,76,0.3)',
                     pb: 0.5,
                     transition: 'border-color 0.2s, opacity 0.2s',
-                    '&:hover': {
-                      borderColor: 'primary.main',
-                      opacity: 0.8,
-                    },
+                    '&:hover': { borderColor: 'primary.main', opacity: 0.8 },
                   }}
                 >
                   {s.buttonLabel.toUpperCase()}

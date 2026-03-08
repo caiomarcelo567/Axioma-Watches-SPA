@@ -3,19 +3,21 @@ import { AppBar, Toolbar, Box, Typography, IconButton, Drawer, List, ListItemBut
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import axiomaLogo from '../assets/AXIOMA_LOGO.png';
-
-const navLinks = [
-  { label: 'Sobre', id: '#about' },
-  { label: 'Vídeos', id: '#videos' },
-  { label: 'Parcerias', id: '#parcerias' },
-  { label: 'Contato', id: '#contact' },
-];
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Header() {
+  const { t, lang, setLang } = useLanguage();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
   const isScrolling = useRef(false);
   const scrollTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const navLinks = [
+    { label: t.nav.about, id: '#about' },
+    { label: t.nav.videos, id: '#videos' },
+    { label: t.nav.partnerships, id: '#parcerias' },
+    { label: t.nav.contact, id: '#contact' },
+  ];
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -68,6 +70,48 @@ export default function Header() {
       isScrolling.current = false;
     }, 1200);
   };
+
+  const LangToggle = () => (
+    <Box sx={{ display: 'flex', gap: 0.5, userSelect: 'none' }}>
+      {(['pt', 'en'] as const).map((l) => (
+        <Box
+          key={l}
+          onClick={() => setLang(l)}
+          sx={{
+            px: 1.5,
+            py: 0.4,
+            borderRadius: '4px',
+            border: '1px solid',
+            borderColor: lang === l ? 'primary.main' : 'rgba(201,168,76,0.2)',
+            backgroundColor: lang === l ? 'rgba(201,168,76,0.1)' : 'transparent',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+            minWidth: 40,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            '&:hover': {
+              borderColor: 'primary.main',
+              backgroundColor: 'rgba(201,168,76,0.06)',
+            },
+          }}
+        >
+          <Typography
+            sx={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: '0.7rem',
+              letterSpacing: '0.12em',
+              fontWeight: 600,
+              color: lang === l ? 'primary.main' : 'rgba(200,200,200,0.4)',
+              transition: 'color 0.2s',
+            }}
+          >
+            {l.toUpperCase()}
+          </Typography>
+        </Box>
+      ))}
+    </Box>
+  );
 
   return (
     <>
@@ -148,14 +192,18 @@ export default function Header() {
                 </Box>
               );
             })}
+            <LangToggle />
           </Box>
 
-          <IconButton
-            onClick={() => setDrawerOpen(true)}
-            sx={{ display: { xs: 'flex', md: 'none' }, color: 'rgba(201,168,76,0.8)' }}
-          >
-            <MenuIcon />
-          </IconButton>
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', gap: 1.5 }}>
+            <LangToggle />
+            <IconButton
+              onClick={() => setDrawerOpen(true)}
+              sx={{ color: 'rgba(201,168,76,0.8)', p: 0.75 }}
+            >
+              <MenuIcon />
+            </IconButton>
+          </Box>
 
         </Toolbar>
       </AppBar>
@@ -203,7 +251,6 @@ export default function Header() {
                     letterSpacing: '0.2em',
                     color: isActive ? 'primary.main' : 'rgba(200,200,200,0.75)',
                     transition: 'color 0.2s',
-                    '&:hover': { color: 'primary.main' },
                   }}
                 >
                   {link.label.toUpperCase()}
