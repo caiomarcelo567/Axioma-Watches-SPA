@@ -11,10 +11,21 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
+function getSavedLang(): Lang {
+  const saved = sessionStorage.getItem('lang');
+  return saved === 'en' ? 'en' : 'pt';
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>('pt');
+  const [lang, setLang] = useState<Lang>(getSavedLang);
+
+  function handleSetLang(l: Lang) {
+    sessionStorage.setItem('lang', l);
+    setLang(l);
+  }
+
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t: translations[lang] }}>
+    <LanguageContext.Provider value={{ lang, setLang: handleSetLang, t: translations[lang] }}>
       {children}
     </LanguageContext.Provider>
   );
