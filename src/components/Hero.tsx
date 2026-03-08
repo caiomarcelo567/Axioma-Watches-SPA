@@ -167,7 +167,7 @@ export default function Hero() {
             mb: 1,
           }}
         >
-          Espaço voltado para a relojoaria quartz e mecânica automática.
+          Espaço dedicado a boa relojoaria e compartilhamento constante sobre assuntos relacionados ao seguimento.
         </Typography>
 
         <Box sx={revealSx(visible, 620)}>

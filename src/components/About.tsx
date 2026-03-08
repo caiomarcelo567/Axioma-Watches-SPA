@@ -4,18 +4,12 @@ import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
 const pillars = [
   {
     number: '01',
-    title: 'Quartz e Mecânico',
-    description:
-      'Conteúdo dedicado tanto à relojoaria quartz quanto aos movimentos mecânicos automáticos, explorando o melhor de cada universo.',
-  },
-  {
-    number: '02',
     title: 'Informação Verdadeira',
     description:
       'Compromisso com a precisão e honestidade nas análises, reviews e informações apresentadas ao canal.',
   },
   {
-    number: '03',
+    number: '02',
     title: 'Agregar Sempre',
     description:
       'Cada vídeo é pensado para trazer valor real ao entusiasta de relógios, seja iniciante ou colecionador experiente.',
@@ -44,8 +38,8 @@ export default function About() {
         >
           <Box
             component="img"
-            src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=900&q=85&auto=format&fit=crop"
-            alt="Mecanismo de relógio"
+            src="https://images.unsplash.com/photo-1761767189587-7f5930fcd9a8?w=900&q=85&auto=format&fit=crop"
+            alt="Relógio de pulso ao pôr do sol"
             sx={{
               ...revealSx(visible, 0),
               position: { xs: 'relative', lg: 'absolute' },
@@ -131,8 +125,8 @@ export default function About() {
             <Box component="span" sx={{ color: 'primary.main', fontWeight: 600 }}>
               Claudio Vaz
             </Box>
-            , o Axioma Watches é um canal voltado para o universo da relojoaria — onde o quartz
-            encontra o mecânico e cada peça tem uma história a contar.
+            , o Axioma Watches é um canal voltado para o universo da relojoaria — onde relojoaria não é apenas sobre relógios, 
+            é criar histórias, amizades e conexões.
           </Typography>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>

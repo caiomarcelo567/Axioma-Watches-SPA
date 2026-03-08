@@ -184,8 +184,8 @@ export default function Contact() {
             variant="body2"
             sx={{ ...revealSx(visible, 200), color: 'text.secondary', mb: 5, lineHeight: 1.8, maxWidth: 380 }}
           >
-            Tem uma dúvida, sugestão de pauta ou quer falar sobre relojoaria? Preencha o formulário
-            e enviaremos sua mensagem diretamente.
+            Tem uma dúvida, sugestão de pauta ou qualquer assunto sobre a boa relojoaria? Preencha o formulário, 
+            envie a mensagem e te responderemos em breve!
           </Typography>
 
           <Box sx={{ ...revealSx(visible, 320), display: 'flex', flexDirection: 'column', gap: 2.5, mb: 3 }}>
@@ -298,6 +298,10 @@ export default function Contact() {
               pointerEvents: 'none',
             }}
           />
+
+          {/* fade edges */}
+          <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, #0D0E11 0%, transparent 18%, transparent 82%, #0D0E11 100%)', pointerEvents: 'none', zIndex: 0 }} />
+          <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #0D0E11 0%, transparent 15%, transparent 85%, #0D0E11 100%)', pointerEvents: 'none', zIndex: 0 }} />
 
           <Box sx={{ position: 'relative', zIndex: 1 }}>
             <Typography

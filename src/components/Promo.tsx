@@ -9,7 +9,7 @@ const services = [
     platform: 'Instagram',
     title: 'Divulgação e Parceria',
     description:
-      'Alcance um público apaixonado por relojoaria. O canal realiza divulgações no Instagram para marcas, lojas e lançamentos do segmento, com taxa negociável conforme o projeto.',
+      'Alcance um público apaixonado pela boa relojoaria. O canal realiza divulgações no Instagram para marcas, lojas e lançamentos relacionados ao segmento com taxa negociável conforme o projeto.',
     color: '#E1306C',
     buttonLabel: 'Fale no Instagram',
     href: 'https://www.instagram.com/axiomawatcheschannel',
@@ -19,7 +19,7 @@ const services = [
     platform: 'YouTube',
     title: 'Reviews e Conteúdo',
     description:
-      'Reviews detalhados, comparativos e apresentações de produtos no canal do YouTube. Conteúdo honesto e informativo para entusiastas e colecionadores. Taxa negociável.',
+      'Reviews técnicos detalhados, comparativos e apresentações de produtos no canal do YouTube. Conteúdo legítimo e informativo para entusiastas, colecionadores e profissionais da área, taxa negociável.',
     color: '#FF0000',
     buttonLabel: 'Conheça o Canal',
     href: 'https://www.youtube.com/@axiomawatches',
@@ -57,6 +57,8 @@ export default function Promo() {
                 borderRight: i === 0 ? { md: '1px solid rgba(201,168,76,0.08)' } : 'none',
                 position: 'relative',
                 overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
                 '&::before': {
                   content: '""',
                   position: 'absolute',
@@ -125,7 +127,7 @@ export default function Promo() {
                 {s.description}
               </Typography>
 
-              <Box sx={revealSx(visible, base + 400)}>
+              <Box sx={{ ...revealSx(visible, base + 400), mt: 'auto' }}>
                 <Box
                   component="a"
                   href={s.href}
