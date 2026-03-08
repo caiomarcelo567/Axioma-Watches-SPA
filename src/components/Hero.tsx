@@ -1,5 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
+import axiomaLogo from '../assets/AXIOMA_LOGO.png';
 
 export default function Hero() {
   const { ref, visible } = useScrollReveal({ threshold: 0 });
@@ -58,56 +59,42 @@ export default function Hero() {
           width: '100%',
         }}
       >
-        <Box sx={revealSx(visible, 0)}>
-          <Box
-            sx={{
-              width: 60,
-              height: 60,
+        <Box
+          sx={{
+            ...revealSx(visible, 0),
+            position: 'relative',
+            mb: 4,
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              inset: -6,
               borderRadius: '50%',
-              border: '1.5px dashed rgba(201,168,76,0.45)',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              justifyContent: 'center',
-              mb: 4,
-              backgroundColor: 'rgba(13,14,17,0.6)',
-              backdropFilter: 'blur(4px)',
-              position: 'relative',
-              '&::after': {
-                content: '""',
-                position: 'absolute',
-                inset: 5,
-                borderRadius: '50%',
-                border: '1px solid rgba(201,168,76,0.12)',
-              },
+              border: '1.5px dashed rgba(201,168,76,0.4)',
+            },
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              inset: -14,
+              borderRadius: '50%',
+              border: '1px solid rgba(201,168,76,0.1)',
+            },
+          }}
+        >
+          <Box
+            component="img"
+            src={axiomaLogo}
+            alt="Axioma Watches"
+            sx={{
+              width: { xs: 110, md: 124 },
+              height: { xs: 110, md: 124 },
+              borderRadius: '50%',
+              objectFit: 'cover',
+              objectPosition: 'center 20%',
+              display: 'block',
+              filter: 'brightness(0.9) contrast(1.1) saturate(1.1)',
+              boxShadow: '0 0 32px rgba(201,168,76,0.18), inset 0 0 0 1px rgba(201,168,76,0.15)',
             }}
-          >
-            <Typography
-              sx={{
-                color: 'primary.main',
-                fontFamily: '"Playfair Display", serif',
-                fontWeight: 700,
-                fontSize: '0.85rem',
-                letterSpacing: '0.06em',
-                lineHeight: 1,
-                opacity: 0.8,
-              }}
-            >
-              AW
-            </Typography>
-            <Typography
-              sx={{
-                color: 'primary.main',
-                opacity: 0.22,
-                fontSize: '0.38rem',
-                letterSpacing: '0.12em',
-                mt: 0.3,
-                fontFamily: '"Inter", sans-serif',
-              }}
-            >
-              LOGO
-            </Typography>
-          </Box>
+          />
         </Box>
 
         <Box sx={revealSx(visible, 150)}>

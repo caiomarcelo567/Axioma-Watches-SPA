@@ -1,4 +1,5 @@
 import { AppBar, Toolbar, Box, Typography, Button } from '@mui/material';
+import axiomaLogo from '../assets/AXIOMA_LOGO.png';
 
 export default function Header() {
   const scrollTo = (id: string) => {
@@ -22,25 +23,20 @@ export default function Header() {
           sx={{ display: 'flex', alignItems: 'center', gap: 1.5, cursor: 'pointer', userSelect: 'none' }}
         >
           <Box
+            component="img"
+            src={axiomaLogo}
+            alt="Axioma Watches"
             sx={{
               width: 34,
               height: 34,
               borderRadius: '50%',
-              border: '1.5px solid',
-              borderColor: 'primary.main',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '0.65rem',
-              color: 'primary.main',
-              fontFamily: '"Playfair Display", serif',
-              fontWeight: 700,
-              letterSpacing: '0.05em',
+              objectFit: 'cover',
+              objectPosition: 'center 20%',
               flexShrink: 0,
+              border: '1px solid rgba(201,168,76,0.4)',
+              display: 'block',
             }}
-          >
-            AW
-          </Box>
+          />
           <Typography
             sx={{
               display: { xs: 'none', sm: 'block' },

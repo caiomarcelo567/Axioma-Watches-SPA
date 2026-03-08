@@ -358,20 +358,22 @@ export default function Partnerships() {
 
                 <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'center' }}>
                   <Box
-                    onClick={() => setPlaying(p.brand)}
-                    role="button"
+                    component="a"
+                    href={p.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     sx={{
                       display: 'inline-flex',
                       alignItems: 'center',
                       gap: 0.75,
                       color: 'primary.main',
+                      textDecoration: 'none',
                       fontSize: '0.72rem',
                       letterSpacing: '0.15em',
                       fontFamily: '"Inter", sans-serif',
                       fontWeight: 500,
                       borderBottom: '1px solid rgba(201,168,76,0.3)',
                       pb: 0.5,
-                      cursor: 'pointer',
                       transition: 'border-color 0.2s',
                       '&:hover': { borderColor: 'primary.main' },
                     }}
