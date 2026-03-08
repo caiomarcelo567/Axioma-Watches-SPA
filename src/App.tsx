@@ -1,4 +1,5 @@
 import { ThemeProvider, CssBaseline, Box } from '@mui/material';
+import { Analytics } from '@vercel/analytics/react';
 import theme from './theme';
 import Header from './components/Header';
 import Hero from './components/Hero';
@@ -25,6 +26,7 @@ export default function App() {
         <Contact />
         <Footer />
         <BackToTop />
+        <Analytics />
       </Box>
     </ThemeProvider>
   );
