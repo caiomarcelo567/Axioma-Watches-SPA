@@ -1,8 +1,11 @@
 import { Box, Typography, IconButton, Divider } from '@mui/material';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <Box
       component="footer"
@@ -38,33 +41,20 @@ export default function Footer() {
             AXIOMA WATCHES
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.8rem', mt: 0.5 }}>
-            Por Claudio Vaz
+            {t.footer.by}
           </Typography>
         </Box>
 
-        <Divider
-          orientation="vertical"
-          flexItem
-          sx={{ display: { xs: 'none', md: 'block' }, borderColor: 'rgba(201,168,76,0.15)' }}
-        />
+        <Divider orientation="vertical" flexItem sx={{ display: { xs: 'none', md: 'block' }, borderColor: 'rgba(201,168,76,0.15)' }} />
 
         <Typography
           variant="body2"
-          sx={{
-            color: 'text.secondary',
-            fontSize: '0.8rem',
-            maxWidth: 320,
-            textAlign: 'center',
-          }}
+          sx={{ color: 'text.secondary', fontSize: '0.8rem', maxWidth: 320, textAlign: 'center' }}
         >
-          Espaço voltado para a boa relojoaria sempre.
+          {t.footer.tagline}
         </Typography>
 
-        <Divider
-          orientation="vertical"
-          flexItem
-          sx={{ display: { xs: 'none', md: 'block' }, borderColor: 'rgba(201,168,76,0.15)' }}
-        />
+        <Divider orientation="vertical" flexItem sx={{ display: { xs: 'none', md: 'block' }, borderColor: 'rgba(201,168,76,0.15)' }} />
 
         <Box sx={{ display: 'flex', gap: 1 }}>
           <IconButton
@@ -72,10 +62,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             size="small"
-            sx={{
-              color: 'text.secondary',
-              '&:hover': { color: '#FF0000', backgroundColor: 'rgba(255,0,0,0.08)' },
-            }}
+            sx={{ color: 'text.secondary', '&:hover': { color: '#FF0000', backgroundColor: 'rgba(255,0,0,0.08)' } }}
           >
             <YouTubeIcon />
           </IconButton>
@@ -84,10 +71,7 @@ export default function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             size="small"
-            sx={{
-              color: 'text.secondary',
-              '&:hover': { color: '#E1306C', backgroundColor: 'rgba(225,48,108,0.08)' },
-            }}
+            sx={{ color: 'text.secondary', '&:hover': { color: '#E1306C', backgroundColor: 'rgba(225,48,108,0.08)' } }}
           >
             <InstagramIcon />
           </IconButton>

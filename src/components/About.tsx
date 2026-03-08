@@ -1,23 +1,11 @@
 import { Box, Typography } from '@mui/material';
 import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
-
-const pillars = [
-  {
-    number: '01',
-    title: 'Informação Verdadeira',
-    description:
-      'Compromisso com a precisão e honestidade nas análises, reviews e informações apresentadas ao canal.',
-  },
-  {
-    number: '02',
-    title: 'Agregar Sempre',
-    description:
-      'Cada vídeo é pensado para trazer valor real ao entusiasta de relógios, seja iniciante ou colecionador experiente.',
-  },
-];
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function About() {
   const { ref, visible } = useScrollReveal();
+  const { t } = useLanguage();
+  const { pillars } = t.about;
 
   return (
     <Box id="about" sx={{ backgroundColor: '#0D0E11', overflow: 'hidden' }}>
@@ -39,7 +27,7 @@ export default function About() {
           <Box
             component="img"
             src="https://images.unsplash.com/photo-1761767189587-7f5930fcd9a8?w=900&q=85&auto=format&fit=crop"
-            alt="Relógio de pulso ao pôr do sol"
+            alt={t.about.imgAlt}
             sx={{
               ...revealSx(visible, 0),
               position: { xs: 'relative', lg: 'absolute' },
@@ -93,7 +81,7 @@ export default function About() {
               fontFamily: '"Inter", sans-serif',
             }}
           >
-            SOBRE O CANAL
+            {t.about.label}
           </Typography>
 
           <Typography
@@ -106,8 +94,8 @@ export default function About() {
               color: '#EBEBEB',
             }}
           >
-            O Universo<br />
-            <Box component="span" sx={{ color: 'primary.main' }}>Axioma Watches</Box>
+            {t.about.headingLine1}<br />
+            <Box component="span" sx={{ color: 'primary.main' }}>{t.about.headingHighlighted}</Box>
           </Typography>
 
           <Typography
@@ -121,17 +109,19 @@ export default function About() {
               fontSize: '0.97rem',
             }}
           >
-            Criado por{' '}
-            <Box component="span" sx={{ color: 'primary.main', fontWeight: 600 }}>
-              Claudio Vaz
-            </Box>
-            , o Axioma Watches é um canal voltado para o universo da relojoaria — onde relojoaria não é apenas sobre relógios, 
-            é criar histórias, amizades e conexões.
+            {t.about.body.split('Claudio Vaz').map((part, i) =>
+              i === 0 ? part : (
+                <span key={i}>
+                  <Box component="span" sx={{ color: 'primary.main', fontWeight: 600 }}>Claudio Vaz</Box>
+                  {part}
+                </span>
+              )
+            )}
           </Typography>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {pillars.map((p, i) => (
-              <Box key={p.number} sx={{ ...revealSx(visible, 460 + i * 120), display: 'flex', gap: 3, alignItems: 'flex-start' }}>
+              <Box key={p.title} sx={{ ...revealSx(visible, 460 + i * 120), display: 'flex', gap: 3, alignItems: 'flex-start' }}>
                 <Typography
                   sx={{
                     color: 'primary.main',
@@ -144,14 +134,9 @@ export default function About() {
                     minWidth: 24,
                   }}
                 >
-                  {p.number}
+                  {String(i + 1).padStart(2, '0')}
                 </Typography>
-                <Box
-                  sx={{
-                    borderLeft: '1px solid rgba(201,168,76,0.2)',
-                    pl: 3,
-                  }}
-                >
+                <Box sx={{ borderLeft: '1px solid rgba(201,168,76,0.2)', pl: 3 }}>
                   <Typography
                     variant="h6"
                     sx={{
@@ -176,7 +161,6 @@ export default function About() {
           </Box>
         </Box>
       </Box>
-
     </Box>
   );
 }

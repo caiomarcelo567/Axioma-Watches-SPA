@@ -1,8 +1,10 @@
 import { Box, Typography } from '@mui/material';
 import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function Hero() {
   const { ref, visible } = useScrollReveal({ threshold: 0 });
+  const { t } = useLanguage();
 
   return (
     <Box
@@ -100,7 +102,7 @@ export default function Hero() {
             mb: 1,
           }}
         >
-          Espaço dedicado a boa relojoaria e compartilhamento constante sobre assuntos relacionados ao seguimento.
+          {t.hero.description}
         </Typography>
 
         <Box sx={revealSx(visible, 380)}>
@@ -115,7 +117,7 @@ export default function Hero() {
               opacity: 0.75,
             }}
           >
-            Agregar sempre. Mantendo a verdade nas informações apresentadas.
+            {t.hero.tagline}
           </Typography>
         </Box>
 

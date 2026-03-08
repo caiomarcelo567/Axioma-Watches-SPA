@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Fab, Zoom, Tooltip } from '@mui/material';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import { useLanguage } from '../contexts/LanguageContext';
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 400);
@@ -15,11 +17,11 @@ export default function BackToTop() {
 
   return (
     <Zoom in={visible}>
-      <Tooltip title="Voltar ao topo" placement="left">
+      <Tooltip title={t.backToTop} placement="left">
         <Fab
           onClick={scrollToTop}
           size="small"
-          aria-label="Voltar ao topo"
+          aria-label={t.backToTop}
           sx={{
             position: 'fixed',
             bottom: 28,
@@ -30,10 +32,7 @@ export default function BackToTop() {
             color: 'primary.main',
             backdropFilter: 'blur(8px)',
             boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
-            '&:hover': {
-              backgroundColor: 'rgba(201,168,76,0.1)',
-              borderColor: 'primary.main',
-            },
+            '&:hover': { backgroundColor: 'rgba(201,168,76,0.1)', borderColor: 'primary.main' },
           }}
         >
           <KeyboardArrowUpIcon />

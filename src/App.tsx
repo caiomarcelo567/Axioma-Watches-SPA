@@ -2,6 +2,7 @@ import { ThemeProvider, CssBaseline, Box } from '@mui/material';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import theme from './theme';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import Promo from './components/Promo';
@@ -15,6 +16,7 @@ import BackToTop from './components/BackToTop';
 export default function App() {
   return (
     <ThemeProvider theme={theme}>
+      <LanguageProvider>
       <CssBaseline />
       <Box sx={{ overflowX: 'hidden' }}>
         <Header />
@@ -30,6 +32,7 @@ export default function App() {
         <Analytics />
         <SpeedInsights />
       </Box>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }
