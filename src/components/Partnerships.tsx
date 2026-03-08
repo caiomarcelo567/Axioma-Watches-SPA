@@ -226,14 +226,14 @@ export default function Partnerships() {
                         </Typography>
                       </>
                     ) : (
-                      <>
-                        <Typography sx={{ fontSize: '0.62rem', letterSpacing: '0.18em', color: 'text.secondary', fontFamily: '"Inter", sans-serif', fontWeight: 500 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1.5 }}>
+                        <Typography sx={{ fontSize: '0.70rem', letterSpacing: '0.18em', color: 'text.secondary', fontFamily: '"Inter", sans-serif', fontWeight: 500 }}>
                           {t.partnerships.couponLabel}
                         </Typography>
-                        <Typography sx={{ fontSize: '0.82rem', letterSpacing: '0.2em', color: 'primary.main', fontFamily: '"Inter", sans-serif', fontWeight: 700 }}>
+                        <Typography sx={{ fontSize: '0.9rem', letterSpacing: '0.2em', color: 'primary.main', fontFamily: '"Inter", sans-serif', fontWeight: 700 }}>
                           {p.coupon}
                         </Typography>
-                      </>
+                      </Box>
                     )}
                   </Box>
                 </Tooltip>
