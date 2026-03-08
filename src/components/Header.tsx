@@ -27,8 +27,8 @@ export default function Header() {
             src={axiomaLogo}
             alt="Axioma Watches"
             sx={{
-              width: 34,
-              height: 34,
+              width: 42,
+              height: 42,
               borderRadius: '50%',
               objectFit: 'cover',
               objectPosition: 'center 20%',

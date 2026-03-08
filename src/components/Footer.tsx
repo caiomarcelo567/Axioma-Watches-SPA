@@ -38,7 +38,7 @@ export default function Footer() {
             AXIOMA WATCHES
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', fontSize: '0.8rem', mt: 0.5 }}>
-            Por: Claudio Vaz
+            Por Claudio Vaz
           </Typography>
         </Box>
 
