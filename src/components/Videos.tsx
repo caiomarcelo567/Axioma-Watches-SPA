@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { Box } from '@mui/material';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
 
 const FEATURED_VIDEO_ID = 'cSwWaiP2ReQ';
 
 export default function Videos() {
   const { ref, visible } = useScrollReveal();
+  const [playing, setPlaying] = useState(false);
+  const [thumb, setThumb] = useState(`https://img.youtube.com/vi/${FEATURED_VIDEO_ID}/sddefault.jpg`);
 
   return (
     <Box
@@ -25,23 +29,72 @@ export default function Videos() {
             overflow: 'hidden',
             border: '1px solid rgba(201,168,76,0.15)',
             boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
+            cursor: playing ? 'default' : 'pointer',
           }}
+          onClick={() => !playing && setPlaying(true)}
         >
-          <Box
-            component="iframe"
-            src={`https://www.youtube.com/embed/${FEATURED_VIDEO_ID}`}
-            title="Axioma Watches"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            sx={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              border: 'none',
-            }}
-          />
+          {playing ? (
+            <Box
+              component="iframe"
+              src={`https://www.youtube.com/embed/${FEATURED_VIDEO_ID}?autoplay=1&rel=0`}
+              title="Axioma Watches"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              sx={{
+                position: 'absolute',
+                top: 0, left: 0,
+                width: '100%', height: '100%',
+                border: 'none',
+              }}
+            />
+          ) : (
+            <>
+              <Box
+                component="img"
+                src={thumb}
+                alt="Axioma Watches"
+                onError={() => setThumb(`https://img.youtube.com/vi/${FEATURED_VIDEO_ID}/sddefault.jpg`)}
+                sx={{
+                  position: 'absolute',
+                  top: 0, left: 0,
+                  width: '100%', height: '100%',
+                  objectFit: 'cover',
+                  filter: 'brightness(0.75)',
+                  transition: 'filter 0.3s',
+                  '&:hover': { filter: 'brightness(0.6)' },
+                }}
+              />
+              <Box
+                sx={{
+                  position: 'absolute',
+                  inset: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                <Box
+                  sx={{
+                    width: { xs: 64, md: 80 },
+                    height: { xs: 64, md: 80 },
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(201,168,76,0.92)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 4px 32px rgba(0,0,0,0.6)',
+                    transition: 'transform 0.2s, background-color 0.2s',
+                    '&:hover': {
+                      transform: 'scale(1.1)',
+                      backgroundColor: 'rgba(201,168,76,1)',
+                    },
+                  }}
+                >
+                  <PlayArrowIcon sx={{ color: '#0D0E11', fontSize: { xs: '2.2rem', md: '2.8rem' } }} />
+                </Box>
+              </Box>
+            </>
+          )}
         </Box>
       </Box>
     </Box>
