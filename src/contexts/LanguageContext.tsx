@@ -11,9 +11,16 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
+function getDefaultLang(): Lang {
+  const host = window.location.hostname;
+  if (host === 'localhost' || host.startsWith('192.168.') || host.endsWith('.com.br')) return 'pt';
+  return 'en';
+}
+
 function getSavedLang(): Lang {
   const saved = sessionStorage.getItem('lang');
-  return saved === 'en' ? 'en' : 'pt';
+  if (saved === 'en' || saved === 'pt') return saved;
+  return getDefaultLang();
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
