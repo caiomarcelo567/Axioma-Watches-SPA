@@ -55,7 +55,7 @@ export default function Contact() {
   const socials = [
     { icon: <YouTubeIcon sx={{ fontSize: '1.2rem' }} />, label: 'YouTube', handle: '@axiomawatches', href: 'https://www.youtube.com/@axiomawatches', color: '#FF0000' },
     { icon: <InstagramIcon sx={{ fontSize: '1.2rem' }} />, label: 'Instagram', handle: '@axiomawatcheschannel', href: 'https://www.instagram.com/axiomawatcheschannel', color: '#E1306C' },
-    { icon: <EmailIcon sx={{ fontSize: '1.2rem' }} />, label: t.contact.emailDirectLabel, handle: 'cmvaz2010@gmail.com', href: 'mailto:cmvaz2010@gmail.com', color: '#C9A84C' },
+    { icon: <EmailIcon sx={{ fontSize: '1.2rem' }} />, label: t.contact.emailDirectLabel, handle: 'axiomawatches@gmail.com', href: 'mailto: axiomawatches@gmail.com', color: '#C9A84C' },
   ];
 
   const validate = (n: string, em: string, msg: string): FormErrors => {
