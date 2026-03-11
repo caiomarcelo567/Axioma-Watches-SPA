@@ -19,7 +19,7 @@ This project was developed by me for my father, Claudio Vaz, the creator of the 
 * [Vite 7](https://vite.dev/)
 * [Material UI v7](https://mui.com/)
 * [EmailJS](https://www.emailjs.com/) — send emails directly from the frontend without a backend
-* Fonts: Playfair Display + Inter (Google Fonts)
+* Fonts: Inter (Google Fonts)
 
 ---
 
@@ -83,8 +83,17 @@ To get the URLs: open the spreadsheet → **File → Publish to web** → select
 
 **`recomendacoes` tab columns** (row 1 = header, row 2+ = data):
 
-| brand | model | description | storeUrl |
-|-------|-------|-------------|----------|
+| Col | Suggested header | Description |
+|-----|------------------|-------------|
+| A | brand | Brand name |
+| B | model | Model name or reference code |
+| C | description | Description in Portuguese |
+| D | storeUrl | Store link (opens when the card is clicked) |
+| E | imageUrl | Direct image URL (if empty, the OG image from the store URL is fetched automatically) |
+| F | coupon | Coupon code (shown as an overlay on the card image) |
+| G | descriptionEn | Description in English (if empty, column C is used as fallback) |
+
+> Header names in the spreadsheet are free-form — the code reads by **column position**, not by name.
 
 **`video` tab:** just the YouTube URL in cell A1.
 
