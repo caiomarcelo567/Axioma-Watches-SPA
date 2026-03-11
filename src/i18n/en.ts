@@ -5,6 +5,7 @@ const en: Translations = {
     about: 'About',
     videos: 'Videos',
     partnerships: 'Partnerships',
+    recommendations: 'Recommendations',
     contact: 'Contact',
   },
   hero: {
@@ -27,6 +28,22 @@ const en: Translations = {
         description: 'Every video is crafted to bring real value to watch enthusiasts, whether beginners or experienced collectors.',
       },
     ],
+  },
+  videos: {
+    label: 'LATEST VIDEOS',
+    heading: 'Check out the latest content from the channel',
+    subtitle: 'New videos every week — reviews, analyses, and more about the world of watchmaking.',
+  },
+  recommendations: {
+    label: 'RECOMMENDATIONS',
+    heading: 'Watches recommended',
+    subtitle: 'A personal curation of watches that are worth every penny — tested, approved, and recommended with transparency alongside our partners.',
+    badge: 'RECOMMENDED',
+    visitStore: 'VIEW IN STORE',
+    couponLabel: 'COUPON',
+    copied: 'COPIED!',
+    tooltipCopy: 'Tap to copy coupon',
+    tooltipCopied: 'Coupon copied!',
   },
   promo: {
     instagram: {

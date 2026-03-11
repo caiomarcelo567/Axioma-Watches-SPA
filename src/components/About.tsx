@@ -75,7 +75,7 @@ export default function About() {
             sx={{
               ...revealSx(visible, 120),
               color: 'primary.main',
-              fontSize: '0.65rem',
+              fontSize: '0.78rem',
               letterSpacing: '0.35em',
               mb: 3,
               fontFamily: '"Inter", sans-serif',
@@ -125,7 +125,7 @@ export default function About() {
                 <Typography
                   sx={{
                     color: 'primary.main',
-                    fontSize: '0.65rem',
+                    fontSize: '0.78rem',
                     fontFamily: '"Inter", sans-serif',
                     fontWeight: 500,
                     letterSpacing: '0.1em',
@@ -144,7 +144,7 @@ export default function About() {
                       fontSize: '0.95rem',
                       fontWeight: 600,
                       mb: 0.8,
-                      fontFamily: '"Playfair Display", serif',
+                      fontFamily: '"Inter", sans-serif',
                     }}
                   >
                     {p.title}

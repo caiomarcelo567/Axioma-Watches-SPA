@@ -108,7 +108,7 @@ export default function Hero() {
         <Box sx={revealSx(visible, 380)}>
           <Typography
             sx={{
-              fontFamily: '"Playfair Display", serif',
+              fontFamily: '"Inter", sans-serif',
               fontStyle: 'italic',
               fontSize: { xs: '0.88rem', md: '0.9rem' },
               color: 'primary.light',

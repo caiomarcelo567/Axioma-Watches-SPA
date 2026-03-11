@@ -19,23 +19,25 @@ This project was developed by me for my father, Claudio Vaz, the creator of the 
 * [Vite 7](https://vite.dev/)
 * [Material UI v7](https://mui.com/)
 * [EmailJS](https://www.emailjs.com/) — send emails directly from the frontend without a backend
-* Fonts: Playfair Display + Inter (Google Fonts)
+* Fonts: Inter (Google Fonts)
 
 ---
 
 ## Running locally
 
-Prerequisites: [Node.js](https://nodejs.org/) 18 or higher.
+Prerequisites: [Node.js](https://nodejs.org/) 18 or higher and [Vercel CLI](https://vercel.com/docs/cli) (`npm i -g vercel`).
 
 ```bash
 # Install dependencies (only the first time)
 npm install
 
-# Start the development server
-npm start
+# Start the development server (includes the /api/sheet proxy)
+vercel dev
 ```
 
-Open **http://localhost:5173** in your browser.
+Open **http://localhost:3000** in your browser.
+
+> `vercel dev` is required to run the `/api/sheet` serverless function locally. `npm start` still works but the video and recommendations will use the hardcoded fallback data.
 
 ---
 
@@ -68,30 +70,34 @@ Email: {{from_email}}
 
 ---
 
-## Customization
+## Google Sheets CMS
 
-### Adding the logo
+The featured video and recommended watches are driven by a Google Sheets spreadsheet via the `/api/sheet` serverless proxy. Add these to `.env`:
 
-In `src/components/Hero.tsx`, locate the logo placeholder block and replace it with your `<img>`:
-
-```tsx
-<Box sx={{ mb: 4 }}>
-  <img src="/logo.png" alt="Axioma Watches" style={{ width: 60, height: 60, borderRadius: '50%' }} />
-</Box>
+```env
+VIDEO_SHEET_URL=<CSV export URL of the "video" tab>
+RECOMMENDATIONS_SHEET_URL=<CSV export URL of the "recomendacoes" tab>
 ```
 
-Place the logo file inside the `public/` folder.
+To get the URLs: open the spreadsheet → **File → Publish to web** → select the tab → **CSV** → Publish → copy the URL.
 
-### Updating the featured video
+**`recomendacoes` tab columns** (row 1 = header, row 2+ = data):
 
-In `src/components/Videos.tsx`, edit the constant at the top:
+| Col | Suggested header | Description |
+|-----|------------------|-------------|
+| A | brand | Brand name |
+| B | model | Model name or reference code |
+| C | description | Description in Portuguese |
+| D | storeUrl | Store link (opens when the card is clicked) |
+| E | imageUrl | Direct image URL (if empty, the OG image from the store URL is fetched automatically) |
+| F | coupon | Coupon code (shown as an overlay on the card image) |
+| G | descriptionEn | Description in English (if empty, column C is used as fallback) |
 
-```ts
-const FEATURED_VIDEO_ID = 'abc123XYZ';
-```
+> Header names in the spreadsheet are free-form — the code reads by **column position**, not by name.
 
-The ID is the part after `?v=` in the YouTube URL.
-For example, in `https://www.youtube.com/watch?v=abc123XYZ`, the ID is `abc123XYZ`.
+**`video` tab:** just the YouTube URL in cell A1.
+
+Cache TTL is 3h (`s-maxage=10800` on the CDN + `localStorage` on the client).
 
 ---
 

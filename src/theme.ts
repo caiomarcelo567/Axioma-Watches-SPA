@@ -24,31 +24,31 @@ const theme = createTheme({
     divider: 'rgba(201,168,76,0.2)',
   },
   typography: {
-    fontFamily: '"Playfair Display", "Georgia", serif',
+    fontFamily: '"Inter", "Roboto", sans-serif',
     h1: {
-      fontFamily: '"Playfair Display", serif',
+      fontFamily: '"Inter", sans-serif',
       fontWeight: 700,
       letterSpacing: '0.04em',
     },
     h2: {
-      fontFamily: '"Playfair Display", serif',
+      fontFamily: '"Inter", sans-serif',
       fontWeight: 700,
       letterSpacing: '0.03em',
     },
     h3: {
-      fontFamily: '"Playfair Display", serif',
+      fontFamily: '"Inter", sans-serif',
       fontWeight: 600,
     },
     h4: {
-      fontFamily: '"Playfair Display", serif',
+      fontFamily: '"Inter", sans-serif',
       fontWeight: 600,
     },
     h5: {
-      fontFamily: '"Playfair Display", serif',
+      fontFamily: '"Inter", sans-serif',
       fontWeight: 600,
     },
     h6: {
-      fontFamily: '"Playfair Display", serif',
+      fontFamily: '"Inter", sans-serif',
       fontWeight: 600,
     },
     body1: {
