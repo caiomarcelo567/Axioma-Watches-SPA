@@ -350,9 +350,7 @@ export default function Recommendations() {
   const scroll = (dir: 'left' | 'right') => {
     const el = trackRef.current;
     if (!el) return;
-    const card = el.querySelector<HTMLElement>('[data-carousel-item]');
-    const cardWidth = card?.offsetWidth ?? el.clientWidth;
-    el.scrollBy({ left: dir === 'left' ? -cardWidth : cardWidth, behavior: 'smooth' });
+    el.scrollBy({ left: dir === 'left' ? -el.clientWidth : el.clientWidth, behavior: 'smooth' });
   };
 
   return (
