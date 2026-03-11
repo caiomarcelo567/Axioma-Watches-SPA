@@ -132,7 +132,7 @@ export default function Contact() {
             borderRadius: 1,
           }}
         >
-          <Typography sx={{ ...revealSx(visible, 0), color: 'primary.main', fontSize: '0.65rem', letterSpacing: '0.35em', mb: 3, fontFamily: '"Inter", sans-serif' }}>
+          <Typography sx={{ ...revealSx(visible, 0), color: 'primary.main', fontSize: '0.78rem', letterSpacing: '0.35em', mb: 3, fontFamily: '"Inter", sans-serif' }}>
             {t.contact.label}
           </Typography>
 
@@ -243,7 +243,7 @@ export default function Contact() {
           <Box sx={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, #0D0E11 0%, transparent 15%, transparent 85%, #0D0E11 100%)', pointerEvents: 'none', zIndex: 0 }} />
 
           <Box sx={{ position: 'relative', zIndex: 1 }}>
-            <Typography sx={{ ...revealSx(visible, 150), color: 'primary.main', fontSize: '0.65rem', letterSpacing: '0.35em', mb: 3, fontFamily: '"Inter", sans-serif' }}>
+            <Typography sx={{ ...revealSx(visible, 150), color: 'primary.main', fontSize: '0.78rem', letterSpacing: '0.35em', mb: 3, fontFamily: '"Inter", sans-serif' }}>
               {t.contact.socialsLabel}
             </Typography>
 

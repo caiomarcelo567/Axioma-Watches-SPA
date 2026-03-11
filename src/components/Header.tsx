@@ -16,6 +16,7 @@ export default function Header() {
     { label: t.nav.about, id: '#about' },
     { label: t.nav.videos, id: '#videos' },
     { label: t.nav.partnerships, id: '#parcerias' },
+    { label: t.nav.recommendations, id: '#recomendacoes' },
     { label: t.nav.contact, id: '#contact' },
   ];
 
@@ -148,7 +149,7 @@ export default function Header() {
             <Typography
               sx={{
                 display: { xs: 'none', sm: 'block' },
-                fontFamily: '"Playfair Display", serif',
+                fontFamily: '"Inter", sans-serif',
                 fontSize: '0.85rem',
                 letterSpacing: '0.12em',
                 color: '#C8C8C8',

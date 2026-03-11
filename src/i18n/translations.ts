@@ -8,6 +8,7 @@ export interface Translations {
     about: string;
     videos: string;
     partnerships: string;
+    recommendations: string;
     contact: string;
   };
   hero: {
@@ -21,6 +22,22 @@ export interface Translations {
     body: string;
     imgAlt: string;
     pillars: Array<{ title: string; description: string }>;
+  };
+  videos: {
+    label: string;
+    heading: string;
+    subtitle: string;
+  };
+  recommendations: {
+    label: string;
+    heading: string;
+    subtitle: string;
+    badge: string;
+    visitStore: string;
+    couponLabel: string;
+    copied: string;
+    tooltipCopy: string;
+    tooltipCopied: string;
   };
   promo: {
     instagram: { title: string; description: string; button: string };

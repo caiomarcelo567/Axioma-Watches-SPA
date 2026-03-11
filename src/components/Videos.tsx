@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import { useScrollReveal, revealSx } from '../hooks/useScrollReveal';
-
-const FEATURED_VIDEO_ID = 'cSwWaiP2ReQ';
+import { useVideoConfig } from '../hooks/useVideoConfig';
 
 export default function Videos() {
   const { ref, visible } = useScrollReveal();
+  const { videoId } = useVideoConfig();
   const [playing, setPlaying] = useState(false);
-  const [thumb, setThumb] = useState(`https://img.youtube.com/vi/${FEATURED_VIDEO_ID}/sddefault.jpg`);
 
   return (
     <Box
@@ -30,13 +29,14 @@ export default function Videos() {
             border: '1px solid rgba(201,168,76,0.15)',
             boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
             cursor: playing ? 'default' : 'pointer',
+            backgroundColor: '#111',
           }}
           onClick={() => !playing && setPlaying(true)}
         >
           {playing ? (
             <Box
               component="iframe"
-              src={`https://www.youtube.com/embed/${FEATURED_VIDEO_ID}?autoplay=1&rel=0`}
+              src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
               title="Axioma Watches"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -51,9 +51,8 @@ export default function Videos() {
             <>
               <Box
                 component="img"
-                src={thumb}
+                src={`https://img.youtube.com/vi/${videoId}/sddefault.jpg`}
                 alt="Axioma Watches"
-                onError={() => setThumb(`https://img.youtube.com/vi/${FEATURED_VIDEO_ID}/sddefault.jpg`)}
                 sx={{
                   position: 'absolute',
                   top: 0, left: 0,

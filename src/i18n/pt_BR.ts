@@ -5,6 +5,7 @@ const pt_BR: Translations = {
     about: 'Sobre',
     videos: 'Vídeos',
     partnerships: 'Parcerias',
+    recommendations: 'Recomendações',
     contact: 'Contato',
   },
   hero: {
@@ -27,6 +28,22 @@ const pt_BR: Translations = {
         description: 'Cada vídeo é pensado para trazer valor real ao entusiasta de relógios, seja iniciante ou colecionador experiente.',
       },
     ],
+  },
+  videos: {
+    label: 'ÚLTIMOS VÍDEOS',
+    heading: 'Confira os últimos conteúdos do canal',
+    subtitle: 'Novos vídeos toda semana — reviews, análises e muito mais sobre o universo da relojoaria.',
+  },
+  recommendations: {
+    label: 'RECOMENDAÇÕES',
+    heading: 'Relógios recomendados',
+    subtitle: 'Uma curadoria pessoal de relógios que valem cada centavo — testados, aprovados e indicados com transparência junto aos nossos parceiros.',
+    badge: 'RECOMENDADO',
+    visitStore: 'VER NA LOJA',
+    couponLabel: 'CUPOM',
+    copied: 'COPIADO!',
+    tooltipCopy: 'Toque para copiar o cupom',
+    tooltipCopied: 'Cupom copiado!',
   },
   promo: {
     instagram: {

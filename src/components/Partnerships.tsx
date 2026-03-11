@@ -79,7 +79,7 @@ export default function Partnerships() {
             sx={{
               ...revealSx(visible, 0),
               color: 'primary.main',
-              fontSize: '0.65rem',
+              fontSize: '0.78rem',
               letterSpacing: '0.35em',
               mb: 2,
               fontFamily: '"Inter", sans-serif',
@@ -193,7 +193,7 @@ export default function Partnerships() {
               </Box>
 
               <Box sx={{ p: { xs: 3, md: 4 }, display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <Typography variant="h6" sx={{ color: '#EBEBEB', fontFamily: '"Playfair Display", serif', fontSize: '1.1rem', fontWeight: 600, mb: 1.5 }}>
+                <Typography variant="h6" sx={{ color: '#EBEBEB', fontFamily: '"Inter", sans-serif', fontSize: '1.1rem', fontWeight: 600, mb: 1.5 }}>
                   {p.brand}
                 </Typography>
 

@@ -31,7 +31,7 @@ export default function Footer() {
         <Box>
           <Typography
             sx={{
-              fontFamily: '"Playfair Display", serif',
+              fontFamily: '"Inter", sans-serif',
               fontWeight: 700,
               fontSize: '1.1rem',
               color: 'primary.main',

@@ -17,6 +17,11 @@
   animation: sectionPulse 2.2s ease-out forwards;
 }
 
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 html {
   scroll-behavior: smooth;
 }

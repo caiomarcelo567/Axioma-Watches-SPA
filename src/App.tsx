@@ -9,6 +9,7 @@ import Promo from './components/Promo';
 import About from './components/About';
 import Videos from './components/Videos';
 import Partnerships from './components/Partnerships';
+import Recommendations from './components/Recommendations';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
@@ -26,6 +27,7 @@ export default function App() {
         <About />
         <Videos />
         <Partnerships />
+        <Recommendations />
         <Contact />
         <Footer />
         <BackToTop />

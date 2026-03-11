@@ -25,17 +25,19 @@ This project was developed by me for my father, Claudio Vaz, the creator of the 
 
 ## Running locally
 
-Prerequisites: [Node.js](https://nodejs.org/) 18 or higher.
+Prerequisites: [Node.js](https://nodejs.org/) 18 or higher and [Vercel CLI](https://vercel.com/docs/cli) (`npm i -g vercel`).
 
 ```bash
 # Install dependencies (only the first time)
 npm install
 
-# Start the development server
-npm start
+# Start the development server (includes the /api/sheet proxy)
+vercel dev
 ```
 
-Open **http://localhost:5173** in your browser.
+Open **http://localhost:3000** in your browser.
+
+> `vercel dev` is required to run the `/api/sheet` serverless function locally. `npm start` still works but the video and recommendations will use the hardcoded fallback data.
 
 ---
 
@@ -68,30 +70,25 @@ Email: {{from_email}}
 
 ---
 
-## Customization
+## Google Sheets CMS
 
-### Adding the logo
+The featured video and recommended watches are driven by a Google Sheets spreadsheet via the `/api/sheet` serverless proxy. Add these to `.env`:
 
-In `src/components/Hero.tsx`, locate the logo placeholder block and replace it with your `<img>`:
-
-```tsx
-<Box sx={{ mb: 4 }}>
-  <img src="/logo.png" alt="Axioma Watches" style={{ width: 60, height: 60, borderRadius: '50%' }} />
-</Box>
+```env
+VIDEO_SHEET_URL=<CSV export URL of the "video" tab>
+RECOMMENDATIONS_SHEET_URL=<CSV export URL of the "recomendacoes" tab>
 ```
 
-Place the logo file inside the `public/` folder.
+To get the URLs: open the spreadsheet → **File → Publish to web** → select the tab → **CSV** → Publish → copy the URL.
 
-### Updating the featured video
+**`recomendacoes` tab columns** (row 1 = header, row 2+ = data):
 
-In `src/components/Videos.tsx`, edit the constant at the top:
+| brand | model | description | storeUrl |
+|-------|-------|-------------|----------|
 
-```ts
-const FEATURED_VIDEO_ID = 'abc123XYZ';
-```
+**`video` tab:** just the YouTube URL in cell A1.
 
-The ID is the part after `?v=` in the YouTube URL.
-For example, in `https://www.youtube.com/watch?v=abc123XYZ`, the ID is `abc123XYZ`.
+Cache TTL is 3h (`s-maxage=10800` on the CDN + `localStorage` on the client).
 
 ---
 
