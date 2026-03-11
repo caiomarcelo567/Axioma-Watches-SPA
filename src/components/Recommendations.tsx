@@ -94,6 +94,7 @@ function GalleryItem({ w }: { w: Watch }) {
           aspectRatio: '1/1',
           textDecoration: 'none',
           clipPath: 'inset(0 round 8px)',
+          willChange: 'transform',
           '@media (hover: hover)': {
             '&:hover .watch-img': {
               transform: 'scale(1.05)',
@@ -362,7 +363,7 @@ export default function Recommendations() {
         py: { xs: 10, md: 14 },
       }}
     >
-      <Box ref={ref} sx={{ maxWidth: 1200, mx: 'auto', px: { xs: 4, sm: 6, md: 8 } }}>
+      <Box ref={ref} sx={{ maxWidth: 1600, mx: 'auto', px: { xs: 4, sm: 6, md: 6 } }}>
         <Box sx={{ mb: { xs: 8, md: 10 }, textAlign: 'center' }}>
           <Typography
             sx={{
