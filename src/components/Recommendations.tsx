@@ -39,7 +39,7 @@ function GalleryItem({ w }: { w: Watch }) {
   };
 
   return (
-    <Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
       {copied && (
         <Box
           sx={{
@@ -197,7 +197,7 @@ function GalleryItem({ w }: { w: Watch }) {
         )}
       </Box>
 
-      <Box sx={{ mt: 2, px: 0.5 }}>
+      <Box sx={{ mt: 2, px: 0.5, display: 'flex', flexDirection: 'column', flex: 1 }}>
         <Typography
           sx={{
             fontFamily: '"Inter", sans-serif',
@@ -222,7 +222,7 @@ function GalleryItem({ w }: { w: Watch }) {
         >
           {w.model}
         </Typography>
-        <Box sx={{ minHeight: '5rem' }}>
+        <Box sx={{ flex: 1, minHeight: '5rem' }}>
           {description && (
             <Typography
               variant="body2"
@@ -456,6 +456,8 @@ export default function Recommendations() {
                         width: { xs: '100%', sm: '50%', md: 'calc(33.333%)' },
                         scrollSnapAlign: 'start',
                         px: 1.5,
+                        display: 'flex',
+                        flexDirection: 'column',
                       }}
                     >
                       <GalleryItem w={w} />
