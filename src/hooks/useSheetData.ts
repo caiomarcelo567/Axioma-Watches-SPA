@@ -1,12 +1,5 @@
 import { useEffect, useState } from 'react';
 
-const CACHE_TTL = 3 * 60 * 60 * 1000; // 3h
-
-interface CacheEntry {
-  data: string[][];
-  timestamp: number;
-}
-
 const inFlight = new Map<string, Promise<string[][]>>();
 
 export type SheetType = 'video' | 'recomendacoes';
@@ -16,20 +9,7 @@ export function useSheetData(type: SheetType, cacheKey: string) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const cached = localStorage.getItem(cacheKey);
-    if (cached) {
-      try {
-        const entry: CacheEntry = JSON.parse(cached);
-        if (Date.now() - entry.timestamp < CACHE_TTL) {
-          setData(entry.data);
-          setLoading(false);
-          return;
-        }
-      } catch {
-      }
-    }
-
-    const url = `/api/sheet?type=${type}`;
+    const url = `/api/sheet?type=${type}&_t=${Date.now()}`;
 
     let promise = inFlight.get(type);
     if (!promise) {
@@ -40,26 +20,14 @@ export function useSheetData(type: SheetType, cacheKey: string) {
           }
           return r.text();
         })
-        .then((csv) => {
-          const rows = parseCSV(csv);
-          const entry: CacheEntry = { data: rows, timestamp: Date.now() };
-          localStorage.setItem(cacheKey, JSON.stringify(entry));
-          return rows;
-        })
+        .then((csv) => parseCSV(csv))
         .finally(() => inFlight.delete(type));
       inFlight.set(type, promise);
     }
 
     promise
       .then((rows) => setData(rows))
-      .catch(() => {
-        if (cached) {
-          try {
-            const entry: CacheEntry = JSON.parse(cached);
-            setData(entry.data);
-          } catch { }
-        }
-      })
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, [type, cacheKey]);
 

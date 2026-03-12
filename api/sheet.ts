@@ -14,9 +14,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: 'no-store' });
     const csv = await response.text();
-    res.setHeader('Cache-Control', 's-maxage=10800, stale-while-revalidate');
+    res.setHeader('Cache-Control', 'no-store');
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.send(csv);
