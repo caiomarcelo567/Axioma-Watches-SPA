@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 function extractBestImage(html: string): string | null {
-  // 1. JSON-LD Product structured data — array often has lifestyle shots at index 1+
   const jsonLdMatches = html.matchAll(
     /<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi,
   );
@@ -10,17 +9,14 @@ function extractBestImage(html: string): string | null {
       const data = JSON.parse(match[1]);
       const imgs: unknown = data.image ?? data.images;
       if (Array.isArray(imgs) && imgs.length > 0) {
-        // Prefer second image (index 1) — first is usually the white-bg hero
         const candidate = (imgs[1] ?? imgs[0]) as string;
         if (typeof candidate === 'string' && candidate.startsWith('http')) return candidate;
       }
       if (typeof imgs === 'string' && imgs.startsWith('http')) return imgs;
     } catch {
-      // ignore malformed JSON-LD
     }
   }
 
-  // 2. og:image meta tag (fallback)
   const ogMatch =
     html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i) ??
     html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:image["']/i);
